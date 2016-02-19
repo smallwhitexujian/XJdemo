@@ -1,4 +1,4 @@
-package com.willprojeck.okhttp.okhttp_text;
+package com.MainActivity;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.willprojeck.okhttp.okhttp_text.R;
 
 import java.util.ArrayList;
 
