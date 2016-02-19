@@ -1,4 +1,4 @@
-package com.MainActivity;
+package Http;
 
 import android.os.StrictMode;
 
@@ -19,13 +19,15 @@ import okhttp3.Response;
  * Created by xujian on 16/1/20.
  * okHttp请求方式封装
  * 1,返回值 只会返回code[200..300)之间的请求
- * 2,可以支持body json数据.
+ * 2,可以支持Http body内容（发送到服务器不在from表单中，需要使用流的方式接）请求 post json数据或者get请求数据.
  * 3,可以支持get和post同步
+ * 4,修改单独get请求
+ * 5,修改单独post from表单请求 提交表单形式
  */
 public class HttpManager {
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     public static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");
-
+    //严格控制http请求
     private static void init() {
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .detectDiskReads().detectDiskWrites().detectNetwork()
@@ -75,11 +77,35 @@ public class HttpManager {
         }
     }
 
-    //post请求
+    /**
+     * get请求
+     */
+    public static void getRequest(String url, Map<String, String> params,final CallBack callback){
+        init();//Android 2.3提供一个称为严苛模式（StrictMode）的调试特性
+        String strUrl = restructureURL(Method.GET, url, params);
+        //创建okHttpClient对象
+        OkHttpClient client = new OkHttpClient();
+        //创建一个Request
+        final Request request = new Request.Builder().url(strUrl).build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onFailure(call,e);
+            }
 
-    /***
-     * @param url
-     * @return
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String result = response.body().string();
+                    callback.onSuccess(result);
+                }
+            }
+        });
+    }
+
+    /**
+     * post请求
      */
     public static String postRequest(String url,RequestBody params) {
         init();//Android 2.3提供一个称为严苛模式（StrictMode）的调试特性
@@ -97,13 +123,25 @@ public class HttpManager {
         return "";
     }
 
+    /**
+     * 连接拼接加工 拼接成get形式
+     * @param method    模型判断
+     * @param url       连接判断
+     * @param params    请求参数对
+     * @return          返回拼接好的连接
+     */
     protected static String restructureURL(int method, String url, Map<String, String> params) {
-        if (method == Method.GET) {
+        if (method == Method.GET && params != null) {
             url = url + "?" + encodeParameters(params);
         }
         return url;
     }
 
+    /**
+     * 参数的键和值进行组装
+     * @param params 参数
+     * @return 结果
+     */
     private static String encodeParameters(Map<String, String> params) {
         if (params == null) {
             return "";
@@ -138,7 +176,7 @@ public class HttpManager {
     }
 
     /**
-     * @param list
+     * @param list 手动拼接json格式
      * @return _Json（单层）；
      * @throws Exception
      */

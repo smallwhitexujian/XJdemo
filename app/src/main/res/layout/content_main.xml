@@ -8,7 +8,12 @@
     tools:context="com.MainActivity.MainActivity"
     tools:showIn="@layout/activity_main">
 
-   <include layout="@layout/marquee_view"/>
+    <include layout="@layout/marquee_view" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/button"
