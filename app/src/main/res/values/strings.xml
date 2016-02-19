@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Demo</string>
+    <string name="action_settings">Settings</string>
+
+
+
+    <string name="gps_noPermission">没有获取位置权限</string>
+
+</resources>
