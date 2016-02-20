@@ -29,4 +29,5 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.0.1'
     compile 'com.squareup.okio:okio:1.5.0'
     compile 'com.linsea:opendanmaku:1.0.0@aar'
+    compile 'com.facebook.fresco:fresco:0.8.1+'
 }

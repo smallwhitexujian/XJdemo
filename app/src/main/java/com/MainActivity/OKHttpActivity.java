@@ -72,7 +72,7 @@ public class OKHttpActivity extends Activity implements View.OnClickListener {
         HttpManager.CallBack callBack;
         switch (tag) {
             case 0://get有回调的请求形式
-                url = "http://www.baidu.com";
+                url = "http://apitest.vvago.com/Webservers/Bar/BarIndex";
                 DebugLogs.e("----->查看是否执行了。");
                 callBack = new HttpManager.CallBack() {
                     @Override
@@ -83,13 +83,13 @@ public class OKHttpActivity extends Activity implements View.OnClickListener {
                 HttpManager.getRequest(OKHttpActivity.this, url, null, callBack);
                 break;
             case 1://无回调形式
-                url = "http://blog.csdn.net/chenzujie/article/details/46994073";
+                url = "http://apitest.vvago.com/Webservers/Bar/BarInfo";
                 text.setText(HttpManager.getRequest(url,null));
                 break;
 
             case 2://get请求
                 url = "http://www.fresco-cn.org";
-                callBack = new HttpManager.CallBack() {
+                callBack =   new HttpManager.CallBack() {
                     @Override
                     public void onSuccess(String result) {
                         text.setText(result);

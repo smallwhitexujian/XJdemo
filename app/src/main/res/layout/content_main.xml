@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,18 +9,10 @@
     tools:context="com.MainActivity.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <include layout="@layout/marquee_view" />
-
-    <TextView
-        android:id="@+id/text"
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/imgText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        fresco:roundAsCircle="true" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="205dp"
-        android:text="New Button" />
 </RelativeLayout>
