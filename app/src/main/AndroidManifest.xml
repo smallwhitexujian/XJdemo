@@ -37,7 +37,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.MainActivity.MainActivity"
+            android:name="mediaPlayer.SoundSeekbarActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -46,6 +46,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--&lt;!&ndash; 监听开机启动的广播，用于启动后台服务 &ndash;&gt;-->
+        <receiver android:name="com.receiver.BackgroundReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+                <action android:name="com.anykey.balala.manual" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 后台服务 -->
+        <service
+            android:name="com.Service.BackgroundService"
+            android:allowBackup="true"
+            android:persistent="true"
+            android:enabled="true" >
+            <intent-filter android:priority="1000" >
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
