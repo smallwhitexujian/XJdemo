@@ -11,6 +11,20 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    //改变指向目录
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            java.srcDirs = ['src/main/java', 'src/main/test']
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+
     buildTypes {
         release {
             minifyEnabled false
@@ -19,15 +33,22 @@ android {
     }
 }
 
+
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    //    compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     //下载okHttp安装包
-
     compile 'com.squareup.okhttp3:okhttp:3.0.1'
     compile 'com.squareup.okio:okio:1.5.0'
     compile 'com.linsea:opendanmaku:1.0.0@aar'
-    compile 'com.facebook.fresco:fresco:0.8.1+'
+//    compile 'com.facebook.fresco:fresco:0.8.1+'
+    compile files('libs/bolts-android-1.1.4.jar')
+    compile files('libs/drawee-0.3.0.jar')
+    compile files('libs/fbcore-0.3.0.jar')
+    compile files('libs/fresco-0.3.0.jar')
+    compile files('libs/imagepipeline-0.3.0.jar')
+    compile files('libs/jsr305-3.0.0.jar')
+    compile files('libs/library-2.4.0.jar')
 }
