@@ -37,7 +37,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.MainActivity.MarqueeActivity"
+            android:name="com.MainActivity.Fresco_Demo"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -52,7 +52,6 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.ACTION_SHUTDOWN" />
                 <action android:name="com.anykey.balala.manual" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </receiver>
@@ -62,14 +61,13 @@
             android:name="com.Service.BackgroundService"
             android:allowBackup="true"
             android:persistent="true"
+            android:exported="false"
             android:enabled="true" >
             <intent-filter android:priority="1000" >
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </service>
-        <activity android:name="com.MainActivity.Fresco_gif_listview"/>
     </application>
 
 </manifest>

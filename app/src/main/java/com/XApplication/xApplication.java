@@ -7,7 +7,8 @@ import com.Service.BackgroundService;
 import com.facebook.common.logging.FLog;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
-import Fresco.Utils.ConfigConstants;
+import Fresco.Utils.FrescoConfigConstants;
+import Fresco.Utils.FrescoHelper;
 
 /**
  * Created by xujian on 16/2/20.
@@ -21,9 +22,7 @@ public class xApplication extends Application {
         super.onCreate();
         startBackgroudService();
         //初始化fresco配置
-        FLog.setMinimumLoggingLevel(FLog.DEBUG);// 日志打印等级
-        ConfigConstants.init(getResources());//配置占位图
-        Fresco.initialize(this, ConfigConstants.getImagePipelineConfig(this));//配置图片缓存初始化
+        FrescoHelper.frescoInit(this);
 
     }
 
