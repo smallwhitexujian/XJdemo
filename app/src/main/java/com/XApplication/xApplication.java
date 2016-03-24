@@ -4,11 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 
 import com.Service.BackgroundService;
-import com.facebook.common.logging.FLog;
-import com.facebook.drawee.backends.pipeline.Fresco;
-
-import Fresco.Utils.FrescoConfigConstants;
-import Fresco.Utils.FrescoHelper;
+import com.xujian.frescolib.FrescoHelper;
 
 /**
  * Created by xujian on 16/2/20.
@@ -23,7 +19,6 @@ public class xApplication extends Application {
         startBackgroudService();
         //初始化fresco配置
         FrescoHelper.frescoInit(this);
-
     }
 
     private void startBackgroudService() {

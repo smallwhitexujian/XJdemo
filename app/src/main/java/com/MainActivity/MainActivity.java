@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.willprojeck.okhttp.okhttp_text.R;
 
 

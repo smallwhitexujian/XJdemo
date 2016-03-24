@@ -1,0 +1,64 @@
+apply plugin: 'com.android.library'
+
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+//    //签名
+//    signingConfigs {
+//        release {
+//            storeFile file('release.keystore')
+//            storePassword '123456'
+//            keyAlias 'demo'
+//            keyPassword '111111'
+//        }
+//    }
+//    //渠道
+//    productFlavors {
+//        free {
+//            applicationId 'com.clarck.httpclientnew.free'
+//        }
+//        premium {
+//            applicationId 'com.clarck.httpclientnew.premium'
+//        }
+//    }
+//
+//    //lint检查
+//    lintOptions {
+//        abortOnError false
+//    }
+
+    buildTypes {
+        release {
+            //混淆开关
+            minifyEnabled true
+            //是否zip对齐
+            zipAlignEnabled true
+            //是否打开debuggable开关
+            debuggable false
+            //是否打开jniDebuggable开关
+            jniDebuggable false
+            //混淆配置文件
+            proguardFiles 'proguard-rules.pro'
+        }
+
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.facebook.fresco:fresco:0.9.0+'
+}
+

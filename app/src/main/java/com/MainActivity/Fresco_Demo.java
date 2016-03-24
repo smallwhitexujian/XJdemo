@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.willprojeck.okhttp.okhttp_text.R;
+import com.xujian.frescolib.View.FrescoDrawee;
+import com.xujian.frescolib.View.FrescoRoundView;
 
-import Fresco.Utils.View.FrescoDrawee;
-import Fresco.Utils.View.FrescoRoundView;
 
 /**
  * Created by xujian on 16/3/23.
