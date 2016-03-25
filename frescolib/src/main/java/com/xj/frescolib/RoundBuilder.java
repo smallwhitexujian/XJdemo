@@ -1,4 +1,4 @@
-package com.xujian.frescolib;
+package com.xj.frescolib;
 
 import com.facebook.drawee.generic.RoundingParams;
 

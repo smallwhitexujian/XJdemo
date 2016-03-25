@@ -6,40 +6,13 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 15
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
     }
 
-    repositories {
-        mavenCentral()
+    lintOptions{
+        abortOnError false
     }
-
-//    //签名
-//    signingConfigs {
-//        release {
-//            storeFile file('release.keystore')
-//            storePassword '123456'
-//            keyAlias 'demo'
-//            keyPassword '111111'
-//        }
-//    }
-//    //渠道
-//    productFlavors {
-//        free {
-//            applicationId 'com.clarck.httpclientnew.free'
-//        }
-//        premium {
-//            applicationId 'com.clarck.httpclientnew.premium'
-//        }
-//    }
-//
-//    //lint检查
-//    lintOptions {
-//        abortOnError false
-//    }
-
     buildTypes {
         release {
             //混淆开关
@@ -61,4 +34,17 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.facebook.fresco:fresco:0.9.0+'
 }
+task clearJar(type: Delete) {
+    delete 'build/libs/frescolib.jar'
+}
+
+task makeJar(type: Copy) {
+    from('build/intermediates/bundles/release/')
+    into('build/libs/')
+    include('classes.jar')
+    rename ('classes.jar', 'frescolib.jar')
+}
+
+makeJar.dependsOn(clearJar, build)
+// ./gradlew makeJar
 

@@ -10,7 +10,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.xujian.frescolib;
+package com.xj.frescolib;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -38,7 +38,7 @@ public class FrescoConfigConstants {
 
     public static final int MAX_SMALL_DISK_VERYLOW_CACHE_SIZE = 5 * ByteConstants.MB;//小图极低磁盘空间缓存的最大值（特性：可将大量的小图放到额外放在另一个磁盘空间防止大图占用磁盘空间而删除了大量的小图）
     public static final int MAX_SMALL_DISK_LOW_CACHE_SIZE = 10 * ByteConstants.MB;//小图低磁盘空间缓存的最大值（特性：可将大量的小图放到额外放在另一个磁盘空间防止大图占用磁盘空间而删除了大量的小图）
-//    public static final int MAX_SMALL_DISK_CACHE_SIZE = 20 * ByteConstants.MB;//小图磁盘缓存的最大值（特性：可将大量的小图放到额外放在另一个磁盘空间防止大图占用磁盘空间而删除了大量的小图）
+    public static final int MAX_SMALL_DISK_CACHE_SIZE = 50 * ByteConstants.MB;//小图磁盘缓存的最大值（特性：可将大量的小图放到额外放在另一个磁盘空间防止大图占用磁盘空间而删除了大量的小图）
 
     public static final int MAX_DISK_CACHE_VERYLOW_SIZE = 10 * ByteConstants.MB;//默认图极低磁盘空间缓存的最大值
     public static final int MAX_DISK_CACHE_LOW_SIZE = 30 * ByteConstants.MB;//默认图低磁盘空间缓存的最大值
@@ -91,7 +91,7 @@ public class FrescoConfigConstants {
         DiskCacheConfig diskSmallCacheConfig = DiskCacheConfig.newBuilder(context)
                 .setBaseDirectoryPath(context.getApplicationContext().getCacheDir())//缓存图片基路径
                 .setBaseDirectoryName(IMAGE_PIPELINE_SMALL_CACHE_DIR)//文件夹名
-                .setMaxCacheSize(FrescoConfigConstants.MAX_DISK_CACHE_SIZE)//默认缓存的最大大小。
+                .setMaxCacheSize(FrescoConfigConstants.MAX_SMALL_DISK_CACHE_SIZE)//默认缓存的最大大小。
                 .setMaxCacheSizeOnLowDiskSpace(MAX_SMALL_DISK_LOW_CACHE_SIZE)//缓存的最大大小,使用设备时低磁盘空间。
                 .setMaxCacheSizeOnVeryLowDiskSpace(MAX_SMALL_DISK_VERYLOW_CACHE_SIZE)//缓存的最大大小,当设备极低磁盘空间
                 .build();
@@ -142,31 +142,31 @@ public class FrescoConfigConstants {
 
 
 
-    //Drawees   DraweeHierarchy  组织
-    public static GenericDraweeHierarchy getGenericDraweeHierarchy(Context context) {
-        return new GenericDraweeHierarchyBuilder(context.getResources())
-                .reset()//重置
-//                .setActualImageColorFilter(colorFilter)//颜色过滤
-//                .setActualImageFocusPoint(focusPoint)//focusCrop, 需要指定一个居中点
-//                .setActualImageMatrix(actualImageMatrix)
-//                .setActualImageScaleType(actualImageScaleType)//fresco:actualImageScaleType="focusCrop"缩放类型
-//                .setBackground(background)//fresco:backgroundImage="@color/blue"背景图片
-//                .setBackgrounds(backgrounds)
-//                .setFadeDuration(fadeDuration)//fresco:fadeDuration="300"加载图片动画时间
-                .setFailureImage(FrescoConfigConstants.sErrorDrawable)//fresco:failureImage="@drawable/error"失败图
-//                .setFailureImage(failureDrawable, failureImageScaleType)//fresco:failureImageScaleType="centerInside"失败图缩放类型
-//                .setOverlay(overlay)//fresco:overlayImage="@drawable/watermark"叠加图
-//                .setOverlays(overlays)
-                .setPlaceholderImage(FrescoConfigConstants.sPlaceholderDrawable)//fresco:placeholderImage="@color/wait_color"占位图
-//                .setPlaceholderImage(placeholderDrawable, placeholderImageScaleType)//fresco:placeholderImageScaleType="fitCenter"占位图缩放类型
-//                .setPressedStateOverlay(drawable)//fresco:pressedStateOverlayImage="@color/red"按压状态下的叠加图
-                .setProgressBarImage(new ProgressBarDrawable())//进度条fresco:progressBarImage="@drawable/progress_bar"进度条
-//                .setProgressBarImage(progressBarImage, progressBarImageScaleType)//fresco:progressBarImageScaleType="centerInside"进度条类型
-//                .setRetryImage(retryDrawable)//fresco:retryImage="@drawable/retrying"点击重新加载
-//                .setRetryImage(retryDrawable, retryImageScaleType)//fresco:retryImageScaleType="centerCrop"点击重新加载缩放类型
-                .setRoundingParams(RoundingParams.asCircle())//圆形/圆角fresco:roundAsCircle="true"圆形
-                .build();
-    }
+//    //Drawees   DraweeHierarchy  组织
+//    public static GenericDraweeHierarchy getGenericDraweeHierarchy(Context context) {
+//        return new GenericDraweeHierarchyBuilder(context.getResources())
+//                .reset()//重置
+////                .setActualImageColorFilter(colorFilter)//颜色过滤
+////                .setActualImageFocusPoint(focusPoint)//focusCrop, 需要指定一个居中点
+////                .setActualImageMatrix(actualImageMatrix)
+////                .setActualImageScaleType(actualImageScaleType)//fresco:actualImageScaleType="focusCrop"缩放类型
+////                .setBackground(background)//fresco:backgroundImage="@color/blue"背景图片
+////                .setBackgrounds(backgrounds)
+////                .setFadeDuration(fadeDuration)//fresco:fadeDuration="300"加载图片动画时间
+//                .setFailureImage(FrescoConfigConstants.sErrorDrawable)//fresco:failureImage="@drawable/error"失败图
+////                .setFailureImage(failureDrawable, failureImageScaleType)//fresco:failureImageScaleType="centerInside"失败图缩放类型
+////                .setOverlay(overlay)//fresco:overlayImage="@drawable/watermark"叠加图
+////                .setOverlays(overlays)
+//                .setPlaceholderImage(FrescoConfigConstants.sPlaceholderDrawable)//fresco:placeholderImage="@color/wait_color"占位图
+////                .setPlaceholderImage(placeholderDrawable, placeholderImageScaleType)//fresco:placeholderImageScaleType="fitCenter"占位图缩放类型
+////                .setPressedStateOverlay(drawable)//fresco:pressedStateOverlayImage="@color/red"按压状态下的叠加图
+//                .setProgressBarImage(new ProgressBarDrawable())//进度条fresco:progressBarImage="@drawable/progress_bar"进度条
+////                .setProgressBarImage(progressBarImage, progressBarImageScaleType)//fresco:progressBarImageScaleType="centerInside"进度条类型
+////                .setRetryImage(retryDrawable)//fresco:retryImage="@drawable/retrying"点击重新加载
+////                .setRetryImage(retryDrawable, retryImageScaleType)//fresco:retryImageScaleType="centerCrop"点击重新加载缩放类型
+//                .setRoundingParams(RoundingParams.asCircle())//圆形/圆角fresco:roundAsCircle="true"圆形
+//                .build();
+//    }
 
 //    //圆形，圆角切图，对动图无效
 //    public static RoundingParams getRoundingParams() {

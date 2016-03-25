@@ -70,4 +70,5 @@
     public static ** valueOf(java.lang.String);
 }
 # fresco
--keep class com.xujian.frescolib.**{*;}
+-keep class com.xj.frescolib.View**{*;}
+-keep class com.xj.frescolib.FrescoHelper

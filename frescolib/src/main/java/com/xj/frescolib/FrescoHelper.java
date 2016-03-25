@@ -1,8 +1,6 @@
-package com.xujian.frescolib;
+package com.xj.frescolib;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
