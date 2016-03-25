@@ -2,17 +2,15 @@ package com.MainActivity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.ListView;
 
 import com.Adapter.CommonAdapter;
 import com.Adapter.ViewHolder;
 import com.willprojeck.okhttp.okhttp_text.R;
+import com.xj.utils.View.RefreshLayout.SwipyRefreshLayout;
+import com.xj.utils.View.RefreshLayout.SwipyRefreshLayoutDirection;
 
 import java.util.ArrayList;
-
-import RefreshLayout.SwipyRefreshLayout;
-import RefreshLayout.SwipyRefreshLayoutDirection;
 
 
 /**

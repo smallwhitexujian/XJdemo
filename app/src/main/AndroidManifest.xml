@@ -37,7 +37,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.MainActivity.Fresco_Demo"
+            android:name="com.MainActivity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -45,6 +45,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity android:name="com.MainActivity.MarqueeActivity"/>
+        <activity android:name="com.MainActivity.GpsActivity"/>
+        <activity android:name="com.MainActivity.Fresco_Demo"/>
+        <activity android:name="com.MainActivity.OKHttpActivity"/>
+
+
+
+
+
 
         <!--&lt;!&ndash; 监听开机启动的广播，用于启动后台服务 &ndash;&gt;-->
         <receiver android:name="com.receiver.BackgroundReceiver">

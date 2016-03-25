@@ -9,13 +9,14 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.Utils.DebugLogs;
 import com.willprojeck.okhttp.okhttp_text.R;
 
 
 import java.util.HashMap;
 
-import Http.HttpManager;
+import com.xj.utils.Http.HttpManager;
+import com.xj.utils.utils.DebugLogs;
+
 import okhttp3.FormBody;
 import okhttp3.RequestBody;
 

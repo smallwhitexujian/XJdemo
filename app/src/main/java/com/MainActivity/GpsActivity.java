@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.willprojeck.okhttp.okhttp_text.R;
 
-import GpsTracker.GpsTracker;
+import com.xj.utils.GpsTracker.GpsTracker;
 
 /**
  * Created by xujian on 16/2/18.
@@ -44,16 +44,24 @@ public class GpsActivity extends Activity implements View.OnClickListener{
                 results.setText(str);
                 break;
             case R.id.btn1://获取城市
-                results.setText(gpsTracker.getCity());
+                if (!gpsTracker.getCity().isEmpty()){
+                    results.setText(gpsTracker.getCity());
+                }
                 break;
             case R.id.btn2:
-                results.setText(gpsTracker.getAddress());
+                if (!gpsTracker.getAddress().isEmpty()){
+                    results.setText(gpsTracker.getAddress());
+                }
                 break;
             case R.id.btn3:
-                results.setText(gpsTracker.getCanCity().getCountryName());
+                if (!gpsTracker.getCanCity().getCountryName().isEmpty()){
+                    results.setText(gpsTracker.getCanCity().getCountryName());
+                }
                 break;
             case R.id.btn4:
-                results.setText(gpsTracker.getAddMessage().toString());
+                if (!gpsTracker.getAddMessage().toString().isEmpty()){
+                    results.setText(gpsTracker.getAddMessage().toString());
+                }
                 break;
         }
     }

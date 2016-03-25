@@ -8,7 +8,8 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 
-import com.Utils.DebugLogs;
+import com.xj.utils.utils.DebugLogs;
+
 
 /**
  * Created by xujian on 16/2/22.

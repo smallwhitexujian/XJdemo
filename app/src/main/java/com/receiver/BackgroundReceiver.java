@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.Service.BackgroundService;
-import com.Utils.DebugLogs;
+import com.xj.utils.utils.DebugLogs;
 
 
 /**
@@ -18,14 +18,18 @@ public class BackgroundReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-        if (action.equals(Intent.ACTION_BOOT_COMPLETED)){
-            DebugLogs.v("BackgroundReceiver开机自起启动");
-            context.startService(new Intent(context, BackgroundService.class));
-        }else if (action.equals(Intent.ACTION_SHUTDOWN)){
-            //处理系统停止时候是否结束service
-        }else if (action.equals(MANUAL_ACTION)){
-            DebugLogs.v("BackgroundReceiver手动启动");
-            context.startService(new Intent(context, BackgroundService.class));
+        switch (action) {
+            case Intent.ACTION_BOOT_COMPLETED:
+                DebugLogs.v("BackgroundReceiver开机自起启动");
+                context.startService(new Intent(context, BackgroundService.class));
+                break;
+            case Intent.ACTION_SHUTDOWN:
+                //处理系统停止时候是否结束service
+                break;
+            case MANUAL_ACTION:
+                DebugLogs.v("BackgroundReceiver手动启动");
+                context.startService(new Intent(context, BackgroundService.class));
+                break;
         }
 
     }

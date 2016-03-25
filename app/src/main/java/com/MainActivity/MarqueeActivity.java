@@ -18,7 +18,7 @@ import com.willprojeck.okhttp.okhttp_text.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import Marquee.MarqueeUilts;
+import com.xj.utils.Marquee.MarqueeUilts;
 
 
 /**
