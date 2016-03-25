@@ -2,6 +2,7 @@ package com.MainActivity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.ListView;
 
 import com.Adapter.CommonAdapter;
@@ -10,20 +11,28 @@ import com.willprojeck.okhttp.okhttp_text.R;
 
 import java.util.ArrayList;
 
+import RefreshLayout.SwipyRefreshLayout;
+import RefreshLayout.SwipyRefreshLayoutDirection;
+
 
 /**
  * Created by xujian on 16/3/23.
  * fresco图片处理
  */
-public class Fresco_Demo extends Activity{
+public class Fresco_Demo extends Activity implements SwipyRefreshLayout.OnRefreshListener {
     private CommonAdapter<String> mAdapter = null;
-    private ListView listview =null;
+    private ListView listview = null;
+    private SwipyRefreshLayout mSwipyRefreshLayout;
     private ArrayList<String> list = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fresco);
-        listview = (ListView)findViewById(R.id.list_item);
+        listview = (ListView) findViewById(R.id.list_item);
+        mSwipyRefreshLayout = (SwipyRefreshLayout) findViewById(R.id.pullToRefreshView);
+        mSwipyRefreshLayout.setOnRefreshListener(this);
+        mSwipyRefreshLayout.setDirection(SwipyRefreshLayoutDirection.BOTH);
         String url1 = "http://f.hiphotos.baidu.com/image/h%3D200/sign=236c94ef2c381f3081198aa999004c67/242dd42a2834349bbe78c852cdea15ce37d3beef.jpg";
         String url2 = "http://h.hiphotos.baidu.com/image/pic/item/d31b0ef41bd5ad6ee22bc23d85cb39dbb7fd3c12.jpg";
         String url3 = "http://c.hiphotos.baidu.com/image/pic/item/267f9e2f070828389df77ac3bc99a9014d08f16b.jpg";
@@ -46,12 +55,26 @@ public class Fresco_Demo extends Activity{
         list.add(url9);
         list.add(url0);
         list.add(url10);
-        mAdapter = new CommonAdapter<String>(Fresco_Demo.this,list,R.layout.item_layou) {
+        mAdapter = new CommonAdapter<String>(Fresco_Demo.this, list, R.layout.item_layou) {
             @Override
             public void convert(ViewHolder helper, String item, int position) {
-                helper.setFrescoDrawView(R.id.contentPanel,list.get(position));
+                helper.setFrescoDrawView(R.id.contentPanel, list.get(position));
             }
         };
         listview.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onRefresh(final SwipyRefreshLayoutDirection direction) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (direction == SwipyRefreshLayoutDirection.TOP) {
+                    mSwipyRefreshLayout.setRefreshing(false);
+                } else {
+                    mSwipyRefreshLayout.setRefreshing(false);
+                }
+            }
+        });
     }
 }
