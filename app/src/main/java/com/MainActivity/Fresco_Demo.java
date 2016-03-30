@@ -1,14 +1,18 @@
 package com.MainActivity;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.ListView;
 
 import com.Adapter.CommonAdapter;
 import com.Adapter.ViewHolder;
 import com.willprojeck.okhttp.okhttp_text.R;
+import com.xj.frescolib.View.FrescoDrawee;
+import com.xj.utils.Http.HttpManager;
 import com.xj.utils.View.RefreshLayout.SwipyRefreshLayout;
 import com.xj.utils.View.RefreshLayout.SwipyRefreshLayoutDirection;
+import com.xj.utils.utils.DebugLogs;
 
 import java.util.ArrayList;
 
@@ -22,16 +26,32 @@ public class Fresco_Demo extends Activity implements SwipyRefreshLayout.OnRefres
     private ListView listview = null;
     private SwipyRefreshLayout mSwipyRefreshLayout;
     private ArrayList<String> list = new ArrayList<>();
+    private FrescoDrawee frescoview;
+    private String url1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fresco);
         listview = (ListView) findViewById(R.id.list_item);
+        frescoview = (FrescoDrawee)findViewById(R.id.frescoView);
+        initData();
+
         mSwipyRefreshLayout = (SwipyRefreshLayout) findViewById(R.id.pullToRefreshView);
         mSwipyRefreshLayout.setOnRefreshListener(this);
         mSwipyRefreshLayout.setDirection(SwipyRefreshLayoutDirection.BOTH);
-        String url1 = "http://f.hiphotos.baidu.com/image/h%3D200/sign=236c94ef2c381f3081198aa999004c67/242dd42a2834349bbe78c852cdea15ce37d3beef.jpg";
+
+        mAdapter = new CommonAdapter<String>(Fresco_Demo.this, list, R.layout.item_layou) {
+            @Override
+            public void convert(ViewHolder helper, String item, int position) {
+                helper.setFrescoDrawView(R.id.contentPanel, list.get(position));
+            }
+        };
+        listview.setAdapter(mAdapter);
+    }
+
+    private void initData() {
+        url1 = "http://f.hiphotos.baidu.com/image/h%3D200/sign=236c94ef2c381f3081198aa999004c67/242dd42a2834349bbe78c852cdea15ce37d3beef.jpg";
         String url2 = "http://h.hiphotos.baidu.com/image/pic/item/d31b0ef41bd5ad6ee22bc23d85cb39dbb7fd3c12.jpg";
         String url3 = "http://c.hiphotos.baidu.com/image/pic/item/267f9e2f070828389df77ac3bc99a9014d08f16b.jpg";
         String url4 = "http://c.hiphotos.baidu.com/image/pic/item/b17eca8065380cd743b2043aa544ad34588281bd.jpg";
@@ -53,13 +73,6 @@ public class Fresco_Demo extends Activity implements SwipyRefreshLayout.OnRefres
         list.add(url9);
         list.add(url0);
         list.add(url10);
-        mAdapter = new CommonAdapter<String>(Fresco_Demo.this, list, R.layout.item_layou) {
-            @Override
-            public void convert(ViewHolder helper, String item, int position) {
-                helper.setFrescoDrawView(R.id.contentPanel, list.get(position));
-            }
-        };
-        listview.setAdapter(mAdapter);
     }
 
     @Override

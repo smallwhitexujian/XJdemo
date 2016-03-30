@@ -3,14 +3,15 @@ package com.xj.frescolib.View;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
-import com.facebook.common.logging.FLog;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.controller.ControllerListener;
+import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.generic.RoundingParams;
@@ -55,10 +56,10 @@ public class FrescoRoundView extends SimpleDraweeView {
         RoundBuilder roundBuilder = new RoundBuilder();
         roundingParams = roundBuilder
                 .setRoundAsCircle(true)//设置是否为圆形
-//                .setBorder(Color.BLACK, 2)//设置边框颜色和边框大小
-                .setOverlayColor(Color.WHITE)//覆盖颜色，如果不设置覆盖颜色gif图会出现问题
+                .setBorder(Color.TRANSPARENT, 1)//设置边框颜色和边框大小
+//                .setOverlayColor(Color.WHITE)//覆盖颜色，如果不设置覆盖颜色gif图会出现问题
                 .setCornersRadius(10)//设置圆角
-                .setRoundingMethod(RoundingParams.RoundingMethod.OVERLAY_COLOR)//设置圆形模式
+                .setRoundingMethod(RoundingParams.RoundingMethod.BITMAP_ONLY)//设置圆形模式
                 .build();
     }
 
@@ -77,10 +78,16 @@ public class FrescoRoundView extends SimpleDraweeView {
     @Override
     public void setImageURI(Uri uri) {
         super.setImageURI(uri);
+        setHierarchy(getGenericDraweeHierarchy(mcontext));
     }
 
     public void setFadeDuration(int Duration){
         fadeDuration = Duration;
+    }
+
+    public void setDefutImage(Drawable defutImage){
+        setHierarchy(new GenericDraweeHierarchyBuilder(mcontext.getResources())
+                .setPlaceholderImage(defutImage).build());
     }
 
     //图片解码
@@ -108,12 +115,13 @@ public class FrescoRoundView extends SimpleDraweeView {
     //Drawees   DraweeHierarchy  组织
     public GenericDraweeHierarchy getGenericDraweeHierarchy(Context context) {
         return new GenericDraweeHierarchyBuilder(context.getResources())
-                .reset()//重置
+//                .reset()//重置
 //                .setFadeDuration(fadeDuration)//fresco:fadeDuration="300"加载图片动画时间
                 .setFailureImage(FrescoConfigConstants.sErrorDrawable)//fresco:failureImage="@drawable/error"失败图
-                .setPlaceholderImage(FrescoConfigConstants.sPlaceholderDrawable)//fresco:placeholderImage="@color/wait_color"占位图
+                .setPlaceholderImage(FrescoConfigConstants.sPlaceholderDrawable, ScalingUtils.ScaleType.CENTER)//fresco:placeholderImage="@color/wait_color"占位图
 //                .setProgressBarImage(new ProgressBarDrawable())//进度条fresco:progressBarImage="@drawable/progress_bar"进度条
                 .setRoundingParams(roundingParams)//圆形/圆角fresco:roundAsCircle="true"圆形
+                .setActualImageScaleType(ScalingUtils.ScaleType.FOCUS_CROP)
                 .build();
     }
 
@@ -161,7 +169,7 @@ public class FrescoRoundView extends SimpleDraweeView {
                 .setImageRequest(imageRequest)//设置单个图片请求～～～不可与setFirstAvailableImageRequests共用，配合setLowResImageRequest为高分辨率的图
                 .setOldController(getController())//DraweeController复用
                 .setTapToRetryEnabled(true)//点击重新加载图
-                .setControllerListener(controllerListener)
+//                .setControllerListener(controllerListener)
                 .build();
     }
 }

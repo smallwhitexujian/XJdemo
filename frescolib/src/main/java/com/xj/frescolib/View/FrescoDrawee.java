@@ -4,14 +4,17 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
-import com.facebook.common.logging.FLog;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.controller.ControllerListener;
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.common.ImageDecodeOptions;
@@ -21,6 +24,7 @@ import com.facebook.imagepipeline.request.BasePostprocessor;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.facebook.imagepipeline.request.Postprocessor;
+import com.xj.frescolib.FrescoConfigConstants;
 
 /**
  * Created by xujian on 16/3/23.
@@ -28,16 +32,20 @@ import com.facebook.imagepipeline.request.Postprocessor;
  * 重载SimpleDrawView
  */
 public class FrescoDrawee extends SimpleDraweeView {
+    private Context mcontext ;
     public FrescoDrawee(Context context) {
         super(context);
+        mcontext = context;
     }
 
     public FrescoDrawee(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mcontext = context;
     }
 
     public FrescoDrawee(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        mcontext = context;
     }
 
     /**
@@ -50,6 +58,7 @@ public class FrescoDrawee extends SimpleDraweeView {
         ImageRequest imageRequest = getImageRequest(url);
         DraweeController draweeController = getDraweeController(imageRequest, lowResUri);
         setController(draweeController);
+        setHierarchy(getGenericDraweeHierarchy(mcontext));
     }
 
     /**
@@ -61,11 +70,30 @@ public class FrescoDrawee extends SimpleDraweeView {
         ImageRequest imageRequest = getImageRequest(url);
         DraweeController draweeController = getDraweeController(imageRequest);
         setController(draweeController);
+        setHierarchy(getGenericDraweeHierarchy(mcontext));
     }
 
+    /**
+     * 设置默认图
+     * @param defutImage 默认图
+     */
+    public void setDefutImage(Drawable defutImage){
+        setHierarchy(new GenericDraweeHierarchyBuilder(mcontext.getResources())
+                .setPlaceholderImage(defutImage).build());
+    }
     @Override
     public void setImageURI(Uri uri) {
         super.setImageURI(uri);
+        setHierarchy(getGenericDraweeHierarchy(mcontext));
+    }
+
+    /**
+     * 设置图片填充模式
+     */
+    public void setImageImageScaleType(ScalingUtils.ScaleType scaleType){
+        setHierarchy(new GenericDraweeHierarchyBuilder(mcontext.getResources())
+                .setActualImageScaleType(scaleType)
+                .build());
     }
 
     //图片解码
@@ -85,7 +113,6 @@ public class FrescoDrawee extends SimpleDraweeView {
                 .setLocalThumbnailPreviewsEnabled(true)
                 .setLowestPermittedRequestLevel(ImageRequest.RequestLevel.FULL_FETCH)
                 .setProgressiveRenderingEnabled(true)
-                .setPostprocessor(redMeshPostprocessor)//设置下载图片可以bitmap加工后处理出来
 //                .setResizeOptions(new ResizeOptions(getLayoutParams().width, getLayoutParams().height))//暂不支持
                 .build();
     }
@@ -93,7 +120,6 @@ public class FrescoDrawee extends SimpleDraweeView {
     //Drawee控制器
     private DraweeController getDraweeController(ImageRequest imageRequest, String lowResUri) {
         return Fresco.newDraweeControllerBuilder()
-                .reset()//重置
                 .setAutoPlayAnimations(true)//自动播放图片动画
                 .setImageRequest(imageRequest)//设置单个图片请求～～～不可与setFirstAvailableImageRequests共用，配合setLowResImageRequest为高分辨率的图
                 .setLowResImageRequest(ImageRequest.fromUri(lowResUri))//先下载显示低分辨率的图
@@ -138,7 +164,7 @@ public class FrescoDrawee extends SimpleDraweeView {
     };
 
     //操作处理bitmap
-    private Postprocessor redMeshPostprocessor = new BasePostprocessor() {
+    public Postprocessor redMeshPostprocessor = new BasePostprocessor() {
         @Override
         public String getName() {
             return "redMeshPostprocessor";
@@ -151,12 +177,19 @@ public class FrescoDrawee extends SimpleDraweeView {
 
     private DraweeController getDraweeController(ImageRequest imageRequest) {
         return Fresco.newDraweeControllerBuilder()
-                .reset()//重置
+//                .reset()//重置
                 .setAutoPlayAnimations(true)//自动播放图片动画
                 .setImageRequest(imageRequest)//设置单个图片请求～～～不可与setFirstAvailableImageRequests共用，配合setLowResImageRequest为高分辨率的图
                 .setOldController(getController())//DraweeController复用
                 .setTapToRetryEnabled(true)//点击重新加载图
-                .setControllerListener(controllerListener)
+//                .setControllerListener(controllerListener)
+                .build();
+    }
+    //Drawees   DraweeHierarchy  组织
+    public GenericDraweeHierarchy getGenericDraweeHierarchy(Context context) {
+        return new GenericDraweeHierarchyBuilder(context.getResources())
+                .setFailureImage(FrescoConfigConstants.sErrorDrawable)//fresco:failureImage="@drawable/error"失败图
+                .setPlaceholderImage(FrescoConfigConstants.sPlaceholderDrawable)//fresco:placeholderImage="@color/wait_color"占位图
                 .build();
     }
 }
