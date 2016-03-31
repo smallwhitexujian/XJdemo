@@ -17,9 +17,6 @@ import java.util.HashMap;
 import com.xj.utils.Http.HttpManager;
 import com.xj.utils.utils.DebugLogs;
 
-import okhttp3.FormBody;
-import okhttp3.RequestBody;
-
 /**
  * Created by xujian on 16/2/19.
  * Http请求
@@ -81,11 +78,11 @@ public class OKHttpActivity extends Activity implements View.OnClickListener {
                         text.setText(result);
                     }
                 };
-                HttpManager.getRequest(OKHttpActivity.this, url, null, callBack);
+                HttpManager.Request(OKHttpActivity.this,HttpManager.Method.GET, url, callBack,null);
                 break;
             case 1://无回调形式
                 url = "http://apitest.vvago.com/Webservers/Bar/BarInfo";
-                text.setText(HttpManager.getRequest(url,null));
+                text.setText(HttpManager.Request(url,HttpManager.Method.GET,null));
                 break;
 
             case 2://get请求
@@ -121,29 +118,11 @@ public class OKHttpActivity extends Activity implements View.OnClickListener {
                         text.setText(result);
                     }
                 };
-                RequestBody formBody = new FormBody.Builder()
-                        .add("userid","10022")
-                        .add("token","A0CB62E9C390B43442BFE210302E8187")
-                        .add("barid","100054")
-                        .add("barname","aslkdjak")
-                        .add("introduce","你好")
-                        .add("notice","测试")
-                        .add("area","杭州")
-                        .build();
-                HttpManager.postRequest(this, url, formBody, callBack);
+                HttpManager.Request(this,HttpManager.Method.POST, url, callBack, params);
                 break;
             case 6:
                 url = "http://apitest.vvago.com/Webservers/Bar/BarInfoEidt";
-                RequestBody formBody2 = new FormBody.Builder()
-                        .add("userid","10022")
-                        .add("token","A0CB62E9C390B43442BFE210302E8187")
-                        .add("barid","100054")
-                        .add("barname","aslkdjak")
-                        .add("introduce","你好")
-                        .add("notice","测试")
-                        .add("area","杭州")
-                        .build();
-                text.setText(HttpManager.postRequest(url,formBody2));
+                text.setText(HttpManager.Request(url,HttpManager.Method.POST,params));
                 break;
         }
     }

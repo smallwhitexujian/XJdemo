@@ -6,13 +6,11 @@ import android.os.StrictMode;
 import com.xj.utils.utils.DebugLogs;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.MediaType;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -28,9 +26,6 @@ import okhttp3.Response;
  * 5,修改单独post from表单请求 提交表单形式
  */
 public class HttpManager {
-    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    public static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");
-
     //严格控制http请求
     private static void init() {
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
@@ -44,7 +39,7 @@ public class HttpManager {
     /**
      * post body json数据
      * 回调出结果
-     *
+     *      异步操作请求模式
      * @param url      请求地址
      * @param callback 反馈结果
      * @param params   参数
@@ -54,29 +49,19 @@ public class HttpManager {
             DebugLogs.e("请求地址为null/空");
             return;
         }
-        if (params == null) {
-            DebugLogs.e("参数不能null");
-            return;
-        }
         init();//Android 2.3提供一个称为严苛模式（StrictMode）的调试特性
         OkHttpClient client = new OkHttpClient();
         Request request = null;
         if (method == Method.GET) {
             String strUrl = restructureURL(Method.GET, url, params);
             request = new Request.Builder().url(strUrl).build();
-        } else {
-            List<Map<String, String>> listData = new ArrayList<>();
-            listData.add(params);
-            String json = null;
-            try {
-                json = getJson(listData);
-            } catch (Exception e) {
-                e.printStackTrace();
+        } else if (method == Method.POST) {
+            FormBody.Builder builder = new FormBody.Builder();
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.add(entry.getKey(), entry.getValue());
             }
-            if (json != null) {
-                RequestBody body = RequestBody.create(JSON, json);
-                request = new Request.Builder().url(url).post(body).build();
-            }
+            RequestBody requestBody = builder.build();
+            request = new Request.Builder().url(url).post(requestBody).build();
         }
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -102,7 +87,7 @@ public class HttpManager {
     /**
      * post body json数据，get请求
      * 直接返回结果
-     *
+     *     主线程消耗模式
      * @param url    请求地址
      * @param params 参数
      */
@@ -111,29 +96,19 @@ public class HttpManager {
             DebugLogs.e("请求地址为null/空");
             return null;
         }
-        if (params == null) {
-            DebugLogs.e("参数不能null");
-            return null;
-        }
         init();//Android 2.3提供一个称为严苛模式（StrictMode）的调试特性
         OkHttpClient client = new OkHttpClient();
-        Request request = null;
+        Request request;
         if (method == Method.GET) {
             String strUrl = restructureURL(Method.GET, url, params);
             request = new Request.Builder().url(strUrl).build();
         } else {
-            List<Map<String, String>> listData = new ArrayList<>();
-            listData.add(params);
-            String json = null;
-            try {
-                json = getJson(listData);
-            } catch (Exception e) {
-                e.printStackTrace();
+            FormBody.Builder builder = new FormBody.Builder();
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.add(entry.getKey(), entry.getValue());
             }
-            if (json != null) {
-                RequestBody body = RequestBody.create(JSON, json);
-                request = new Request.Builder().url(url).post(body).build();
-            }
+            RequestBody requestBody = builder.build();
+            request = new Request.Builder().url(url).post(requestBody).build();
         }
         try {
             Response response = client.newCall(request).execute();
@@ -144,193 +119,6 @@ public class HttpManager {
         return null;
     }
 
-
-//    /**
-//     * get请求 回调
-//     *
-//     * @param mActivity action
-//     * @param url       地址
-//     * @param callback  回调
-//     */
-//    public static void getRequest(final Activity mActivity, String url, final CallBack callback) {
-//        if (url == null || url.equals("")) {
-//            DebugLogs.e("请求地址为null/空");
-//            return;
-//        }
-//        init();//Android 2.3提供一个称为严苛模式（StrictMode）的调试特性
-//        //创建okHttpClient对象
-//        OkHttpClient client = new OkHttpClient();
-//        //创建一个Request
-//        Request request = new Request.Builder().url(url).build();
-//        Call call = client.newCall(request);
-//        call.enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-////                callback.onFailure(call,e);
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                if (response.isSuccessful()) {
-//                    final String result = response.body().string();
-//                    mActivity.runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            callback.onSuccess(result);
-//                        }
-//                    });
-//                }
-//            }
-//        });
-//    }
-
-    /**
-     * get请求 回调
-     *
-     * @param mActivity action
-     * @param url       地址
-     * @param params    参数
-     * @param callback  回调
-     */
-    public static void getRequest(final Activity mActivity, String url, Map<String, String> params, final CallBack callback) {
-        if (url == null || url.equals("")) {
-            DebugLogs.e("请求地址为null/空");
-            return;
-        }
-        init();//Android 2.3提供一个称为严苛模式（StrictMode）的调试特性
-        String strUrl = restructureURL(Method.GET, url, params);
-        //创建okHttpClient对象
-        OkHttpClient client = new OkHttpClient();
-        //创建一个Request
-        Request request = new Request.Builder().url(strUrl).build();
-        Call call = client.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-//                callback.onFailure(call,e);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    final String result = response.body().string();
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            callback.onSuccess(result);
-                        }
-                    });
-                }
-            }
-        });
-    }
-
-//    /**
-//     * get 请求
-//     *
-//     * @param url 地址
-//     * @return 结果
-//     */
-//    public static String getRequest(String url) {
-//        if (url == null || url.equals("")) {
-//            DebugLogs.e("请求地址为null/空");
-//            return null;
-//        }
-//        init();//Android 2.3提供一个称为严苛模式（StrictMode）的调试特性
-//        //创建okHttpClient对象
-//        OkHttpClient client = new OkHttpClient();
-//        //创建一个Request
-//        Request request = new Request.Builder().url(url).build();
-//        try {
-//            Response response = client.newCall(request).execute();
-//            return response.body().string();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-
-    /**
-     * get 请求
-     *
-     * @param url    地址
-     * @param params 参数
-     * @return 结果
-     */
-    public static String getRequest(String url, Map<String, String> params) {
-        if (url == null || url.equals("")) {
-            DebugLogs.e("请求地址为null/空");
-            return null;
-        }
-        init();//Android 2.3提供一个称为严苛模式（StrictMode）的调试特性
-        String strUrl = restructureURL(Method.GET, url, params);
-        //创建okHttpClient对象
-        OkHttpClient client = new OkHttpClient();
-        //创建一个Request
-        Request request = new Request.Builder().url(strUrl).build();
-        try {
-            Response response = client.newCall(request).execute();
-            return response.body().string();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * post  from 请求(一般使用这个)
-     */
-    public static void postRequest(final Activity mActivity, String url, RequestBody params, final CallBack callBack) {
-        if (url == null || url.equals("")) {
-            DebugLogs.e("请求地址为null/空");
-            return;
-        }
-        init();//Android 2.3提供一个称为严苛模式（StrictMode）的调试特性
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(url).post(params).build();
-        Call call = client.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-//                callback.onFailure(call,e);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    final String result = response.body().string();
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            callBack.onSuccess(result);
-                        }
-                    });
-                }
-            }
-        });
-    }
-
-
-    /**
-     * post from 提交请求(一般使用这个)
-     */
-    public static String postRequest(String url, RequestBody params) {
-        if (url == null || url.equals("")) {
-            DebugLogs.e("请求地址为null/空");
-            return null;
-        }
-        init();//Android 2.3提供一个称为严苛模式（StrictMode）的调试特性
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(url).post(params).build();
-        try {
-            Response response = client.newCall(request).execute();
-            return response.body().string();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-
-    }
 
     /**
      * 连接拼接加工 拼接成get形式
@@ -384,29 +172,4 @@ public class HttpManager {
         void onSuccess(String result);
     }
 
-
-    /**
-     * @param list 手动拼接json格式
-     * @return _Json（单层）；
-     * @throws Exception
-     */
-    public static String getJson(List<Map<String, String>> list) throws Exception {
-        String data;
-        if (list != null) {
-            data = "";
-            for (Map<String, String> map : list) {
-                StringBuilder m = new StringBuilder();
-                m.append("{");
-                for (String key : map.keySet()) {
-                    m.append("\"").append(key).append("\":\"").append(map.get(key)).append("\",");
-                }
-                String subString = m.substring(0, m.length() - 1) + "}";
-                data += subString + ",";
-            }
-            data = data.substring(0, data.length() - 1);
-        } else {
-            data = "";
-        }
-        return data;
-    }
 }
