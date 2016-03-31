@@ -33,14 +33,10 @@ public class Fresco_Demo extends Activity implements SwipyRefreshLayout.OnRefres
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fresco);
-        listview = (ListView) findViewById(R.id.list_item);
-        frescoview = (FrescoDrawee)findViewById(R.id.frescoView);
+        initView();
         initData();
 
-        mSwipyRefreshLayout = (SwipyRefreshLayout) findViewById(R.id.pullToRefreshView);
-        mSwipyRefreshLayout.setOnRefreshListener(this);
-        mSwipyRefreshLayout.setDirection(SwipyRefreshLayoutDirection.BOTH);
-
+        frescoview.setImageURI(url1);
         mAdapter = new CommonAdapter<String>(Fresco_Demo.this, list, R.layout.item_layou) {
             @Override
             public void convert(ViewHolder helper, String item, int position) {
@@ -48,6 +44,14 @@ public class Fresco_Demo extends Activity implements SwipyRefreshLayout.OnRefres
             }
         };
         listview.setAdapter(mAdapter);
+    }
+
+    private void initView() {
+        listview = (ListView) findViewById(R.id.list_item);
+        frescoview = (FrescoDrawee)findViewById(R.id.frescoView);
+        mSwipyRefreshLayout = (SwipyRefreshLayout) findViewById(R.id.pullToRefreshView);
+        mSwipyRefreshLayout.setOnRefreshListener(this);
+        mSwipyRefreshLayout.setDirection(SwipyRefreshLayoutDirection.BOTH);
     }
 
     private void initData() {
