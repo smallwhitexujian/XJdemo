@@ -85,7 +85,7 @@ public class FrescoRoundView extends SimpleDraweeView {
         fadeDuration = Duration;
     }
 
-    public void setDefutImage(Drawable defutImage){
+    public void setDefutImage(Drawable defutImage) {
         setHierarchy(new GenericDraweeHierarchyBuilder(mcontext.getResources())
                 .setPlaceholderImage(defutImage).build());
     }

@@ -8,8 +8,8 @@ import android.widget.ListView;
 import com.Adapter.CommonAdapter;
 import com.Adapter.ViewHolder;
 import com.willprojeck.okhttp.okhttp_text.R;
+import com.Utils.FrescoBitmapUtils;
 import com.xj.frescolib.View.FrescoDrawee;
-import com.xj.utils.Http.HttpManager;
 import com.xj.utils.View.RefreshLayout.SwipyRefreshLayout;
 import com.xj.utils.View.RefreshLayout.SwipyRefreshLayoutDirection;
 import com.xj.utils.utils.DebugLogs;
@@ -37,6 +37,13 @@ public class Fresco_Demo extends Activity implements SwipyRefreshLayout.OnRefres
         initData();
 
         frescoview.setImageURI(url1);
+        FrescoBitmapUtils frescoBitmapUtils = new FrescoBitmapUtils();
+        frescoBitmapUtils.getImageBitmap(Fresco_Demo.this, url1, new FrescoBitmapUtils.BitCallBack() {
+            @Override
+            public void onNewResultImpl(Bitmap bitmap) {
+                DebugLogs.d("---bitmap--->"+bitmap);
+            }
+        });
         mAdapter = new CommonAdapter<String>(Fresco_Demo.this, list, R.layout.item_layou) {
             @Override
             public void convert(ViewHolder helper, String item, int position) {
