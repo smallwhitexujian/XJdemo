@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.xj.utils.utils.DebugLogs;
 import com.xujian.utilitylib.R;
 
 import java.util.List;
@@ -26,10 +27,10 @@ import java.util.List;
  */
 public class GpsTracker extends Service implements LocationListener {
     private Context mcontext;
-//    //标记GSP状态
-//    private boolean isGPSEnabled = false;
-//    //标记网络状态
-//    private boolean isNetworkEnabled = false;
+    //标记GSP状态
+    private boolean isGPSEnabled = false;
+    //标记网络状态
+    private boolean isNetworkEnabled = false;
     //标记能否获取位置信息，
     private boolean isGetLocation = false;
     private Location location;//位置
@@ -85,6 +86,7 @@ public class GpsTracker extends Service implements LocationListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        DebugLogs.d("----location---->"+location);
         return location;
     }
 
@@ -148,8 +150,7 @@ public class GpsTracker extends Service implements LocationListener {
     public List<Address> getAddMessage(){
         Geocoder geocoder = new Geocoder(mcontext);
         try{
-            List<Address> list = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 5);
-            return list;
+            return geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 5);
         }catch(Exception e){
             e.printStackTrace();
         }

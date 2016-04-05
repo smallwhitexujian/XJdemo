@@ -1,10 +1,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.MainActivity.MainActivity">
+    tools:context="com.example.MainActivity.Material.MaterialMain">
+
+    <item
+        android:id="@+id/action_search"
+        android:orderInCategory="80"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/action_search"
+        app:showAsAction="ifRoom|never" />
+
+    <item
+        android:id="@+id/action_share"
+        android:orderInCategory="80"
+        android:icon="@android:drawable/ic_menu_share"
+        android:title="@string/action_share"
+        app:showAsAction="ifRoom|never" />
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="80"
         android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:icon="@android:drawable/ic_menu_set_as"
+        app:showAsAction="ifRoom|never" />
 </menu>

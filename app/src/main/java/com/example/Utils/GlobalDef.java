@@ -1,4 +1,4 @@
-package com.Utils;
+package com.example.Utils;
 
 /**
  * Created by xujian on 16/2/22.

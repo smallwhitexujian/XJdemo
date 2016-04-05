@@ -1,4 +1,4 @@
-package com.Adapter;
+package com.example.Adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;

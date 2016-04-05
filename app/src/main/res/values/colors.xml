@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <!-- 主题颜色 -->
+    <color name="colorPrimary">#2196F3</color>
+    <!-- 状态栏显示颜色 -->
+    <color name="colorPrimaryDark">#1976D2</color>
+    <!-- 配色，光标颜色系统控件颜色 -->
+    <color name="colorTitle">#ffffff</color>
+    <color name="colorAccent">#1976D2</color>
     <color name="placeholder">#e1e4eb</color>
     <color name="error">#ff9999</color>
+    <color name="background_tab_pressed">#6633B5E5</color>
 </resources>

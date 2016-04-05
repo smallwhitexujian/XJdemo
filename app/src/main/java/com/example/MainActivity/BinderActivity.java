@@ -1,4 +1,4 @@
-package com.MainActivity;
+package com.example.MainActivity;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -8,7 +8,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 
-import com.Service.BackgroundService;
+import com.example.Service.BackgroundService;
 import com.xj.utils.utils.DebugLogs;
 
 /**

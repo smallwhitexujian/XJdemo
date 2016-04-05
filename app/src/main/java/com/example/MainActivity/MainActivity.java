@@ -1,4 +1,4 @@
-package com.MainActivity;
+package com.example.MainActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.example.MainActivity.Material.MaterialMain;
 import com.willprojeck.okhttp.okhttp_text.R;
-import com.xj.utils.utils.DebugLogs;
 
 
 public class MainActivity extends Activity implements View.OnClickListener{
@@ -24,6 +24,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
         addBtn("Gps定位", 1);
         addBtn("Fresco图片加载", 2);
         addBtn("okHttp", 3);
+        addBtn("简单的播放器", 4);
+        addBtn("Material ", 5);
 
     }
 
@@ -56,6 +58,14 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 break;
             case 3:
                 i = new Intent(MainActivity.this, OKHttpActivity.class);
+                startActivity(i);
+                break;
+            case 4:
+                i = new Intent(MainActivity.this, SoundSeekbarActivity.class);
+                startActivity(i);
+                break;
+            case 5:
+                i = new Intent(MainActivity.this, MaterialMain.class);
                 startActivity(i);
                 break;
         }

@@ -1,10 +1,10 @@
-package com.receiver;
+package com.example.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.Service.BackgroundService;
+import com.example.Service.BackgroundService;
 import com.xj.utils.utils.DebugLogs;
 
 

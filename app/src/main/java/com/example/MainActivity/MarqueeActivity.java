@@ -1,4 +1,4 @@
-package com.MainActivity;
+package com.example.MainActivity;
 
 import android.app.Activity;
 import android.graphics.Bitmap;

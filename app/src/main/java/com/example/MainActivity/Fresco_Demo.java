@@ -1,14 +1,14 @@
-package com.MainActivity;
+package com.example.MainActivity;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.ListView;
 
-import com.Adapter.CommonAdapter;
-import com.Adapter.ViewHolder;
+import com.example.Adapter.CommonAdapter;
+import com.example.Adapter.ViewHolder;
 import com.willprojeck.okhttp.okhttp_text.R;
-import com.Utils.FrescoBitmapUtils;
+import com.example.Utils.FrescoBitmapUtils;
 import com.xj.frescolib.View.FrescoDrawee;
 import com.xj.utils.View.RefreshLayout.SwipyRefreshLayout;
 import com.xj.utils.View.RefreshLayout.SwipyRefreshLayoutDirection;
@@ -35,13 +35,18 @@ public class Fresco_Demo extends Activity implements SwipyRefreshLayout.OnRefres
         setContentView(R.layout.activity_fresco);
         initView();
         initData();
-
-        frescoview.setImageURI(url1);
+//        frescoview.setImageURI(url1);
         FrescoBitmapUtils frescoBitmapUtils = new FrescoBitmapUtils();
         frescoBitmapUtils.getImageBitmap(Fresco_Demo.this, url1, new FrescoBitmapUtils.BitCallBack() {
             @Override
-            public void onNewResultImpl(Bitmap bitmap) {
+            public void onNewResultImpl(final Bitmap bitmap) {
                 DebugLogs.d("---bitmap--->"+bitmap);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        frescoview.setImageBitmap(bitmap);
+                    }
+                });
             }
         });
         mAdapter = new CommonAdapter<String>(Fresco_Demo.this, list, R.layout.item_layou) {

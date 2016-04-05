@@ -1,9 +1,9 @@
-package com.XApplication;
+package com.example.XApplication;
 
 import android.app.Application;
 import android.content.Intent;
 
-import com.Service.BackgroundService;
+import com.example.Service.BackgroundService;
 import com.xj.frescolib.FrescoHelper;
 
 /**

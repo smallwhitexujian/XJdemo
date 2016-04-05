@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/material_toolbar" />
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!-- 内容布局 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!-- 标题-->
+            <com.example.MainActivity.Material.widget.PagerSlidingTabStrip
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="48dip" />
+
+            <!-- 页面-->
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <!--左侧滑动菜单 -->
+        <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/drawer_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/colorTitle"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="左侧菜单显示"
+                android:textSize="20dp" />
+        </android.support.v7.widget.LinearLayoutCompat>
+        <!--右侧滑动菜单
+        <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/drawer_view2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:background="@color/colorTitle"
+            android:clickable="true"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="右侧侧菜单显示"
+                android:textSize="20dp" />
+        </android.support.v7.widget.LinearLayoutCompat>-->
+    </android.support.v4.widget.DrawerLayout>
+</LinearLayout>
