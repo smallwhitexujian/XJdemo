@@ -30,9 +30,7 @@ import android.widget.TextView;
 import com.willprojeck.okhttp.okhttp_text.R;
 
 public class SuperAwesomeCardFragment extends Fragment {
-
 	private static final String ARG_POSITION = "position";
-
 	private int position;
 	private static final int[] drawables = { R.drawable.f, R.drawable.s, R.drawable.t, R.drawable.fo,
 			R.drawable.fi};

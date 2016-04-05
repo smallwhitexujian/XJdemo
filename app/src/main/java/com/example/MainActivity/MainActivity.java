@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.MainActivity.Material.MaterialMain;
+import com.example.MainActivity.Material.RecyclerViewExample;
 import com.willprojeck.okhttp.okhttp_text.R;
 
 
@@ -26,6 +27,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         addBtn("okHttp", 3);
         addBtn("简单的播放器", 4);
         addBtn("Material ", 5);
+        addBtn("RecyclerViewExample ", 6);
 
     }
 
@@ -66,6 +68,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 break;
             case 5:
                 i = new Intent(MainActivity.this, MaterialMain.class);
+                startActivity(i);
+                break;
+            case 6:
+                i = new Intent(MainActivity.this, RecyclerViewExample.class);
                 startActivity(i);
                 break;
         }

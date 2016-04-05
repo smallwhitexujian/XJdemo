@@ -52,6 +52,7 @@
         <activity android:name="com.example.MainActivity.OKHttpActivity"/>
         <activity android:name="com.example.MainActivity.SoundSeekbarActivity"/>
         <activity android:name="com.example.MainActivity.Material.MaterialMain"/>
+        <activity android:name="com.example.MainActivity.Material.RecyclerViewExample"/>
 
 
 
