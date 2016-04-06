@@ -27,8 +27,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
         addBtn("okHttp", 3);
         addBtn("简单的播放器", 4);
         addBtn("Material ", 5);
-        addBtn("RecyclerViewExample ", 6);
-
+        addBtn("RecyclerView list ", 6);
+        addBtn("RecyclerViewExample GridView ", 7);
+        addBtn("RecyclerView 瀑布流", 8);
     }
 
     private void addBtn(String text, int tag) {
@@ -72,6 +73,17 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 break;
             case 6:
                 i = new Intent(MainActivity.this, RecyclerViewExample.class);
+                i.putExtra("GRID", 1);
+                startActivity(i);
+                break;
+            case 7:
+                i = new Intent(MainActivity.this, RecyclerViewExample.class);
+                i.putExtra("GRID", 2);
+                startActivity(i);
+                break;
+            case 8:
+                i = new Intent(MainActivity.this, RecyclerViewExample.class);
+                i.putExtra("GRID", 3);
                 startActivity(i);
                 break;
         }

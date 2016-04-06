@@ -16,7 +16,6 @@ package com.example.MainActivity.Material;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -35,6 +34,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.MainActivity.Material.widget.SpacesItemDecoration;
 import com.example.Model.RecyclerModel;
 import com.willprojeck.okhttp.okhttp_text.R;
 import com.xj.frescolib.View.FrescoDrawee;
@@ -69,7 +69,6 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 public class RecyclerViewExample extends AppCompatActivity implements Toolbar.OnMenuItemClickListener{
     private RecyclerView mRecyclerView;
     private List<RecyclerModel> listData = new ArrayList<>();
-    private Toolbar toolbar;
     private RecyclerViewAdapter adapter;
 
     enum Type {
@@ -109,17 +108,35 @@ public class RecyclerViewExample extends AppCompatActivity implements Toolbar.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recyclerview);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         initToolbar();
         makeData();
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-//        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));//这里用线性显示 类似于listview
-//        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));//这里用线性宫格显示 类似于grid view
-        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL));//这里用线性宫格显示 类似于瀑布流
+        int i = getIntent().getIntExtra("GRID", 1);
+        switch (i){
+            case 1:
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(this));//这里用线性显示 类似于listView
+                break;
+            case 2:
+                mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));//这里用线性宫格显示 类似于grid view
+                break;
+            case 3:
+                //设置item之间的间隔
+                SpacesItemDecoration decoration=new SpacesItemDecoration(16);
+                mRecyclerView.addItemDecoration(decoration);
+                mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, OrientationHelper.VERTICAL));//这里用线性宫格显示 类似于瀑布流
+                break;
+        }
         adapter = new RecyclerViewAdapter(listData);
         mRecyclerView.setAdapter(adapter);
         //设置Item增加、移除动画
         mRecyclerView.setItemAnimator(new ScaleInAnimator(new OvershootInterpolator(1f)));
+        initSpinner();
+    }
 
+    /**
+     * 选择动画类型
+     */
+    private void initSpinner() {
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         for (Type type : Type.values()) {
@@ -189,7 +206,7 @@ public class RecyclerViewExample extends AppCompatActivity implements Toolbar.On
 
     //初始化toolbar
     private void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("RecyclerViewExample");
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
