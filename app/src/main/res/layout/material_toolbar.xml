@@ -7,4 +7,10 @@
     android:background="?attr/colorPrimary"
     android:minHeight="?attr/actionBarSize"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    app:theme="@style/ThemeOverlay.AppCompat.ActionBar"/>
+    app:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:showAsAction="ifRoom"/>
+</android.support.v7.widget.Toolbar>

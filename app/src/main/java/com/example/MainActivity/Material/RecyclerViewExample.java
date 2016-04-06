@@ -16,6 +16,7 @@ package com.example.MainActivity.Material;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -23,8 +24,15 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.Model.RecyclerModel;
@@ -34,21 +42,105 @@ import com.xj.frescolib.View.FrescoDrawee;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.recyclerview.animators.BaseItemAnimator;
+import jp.wasabeef.recyclerview.animators.FadeInAnimator;
+import jp.wasabeef.recyclerview.animators.FadeInDownAnimator;
+import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.FadeInRightAnimator;
+import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
+import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
+import jp.wasabeef.recyclerview.animators.FlipInLeftYAnimator;
+import jp.wasabeef.recyclerview.animators.FlipInRightYAnimator;
+import jp.wasabeef.recyclerview.animators.FlipInTopXAnimator;
+import jp.wasabeef.recyclerview.animators.LandingAnimator;
+import jp.wasabeef.recyclerview.animators.OvershootInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.OvershootInRightAnimator;
+import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
+import jp.wasabeef.recyclerview.animators.ScaleInBottomAnimator;
+import jp.wasabeef.recyclerview.animators.ScaleInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator;
+import jp.wasabeef.recyclerview.animators.ScaleInTopAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInRightAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
-public class RecyclerViewExample extends AppCompatActivity {
+
+public class RecyclerViewExample extends AppCompatActivity implements Toolbar.OnMenuItemClickListener{
     private RecyclerView mRecyclerView;
     private List<RecyclerModel> listData = new ArrayList<>();
     private Toolbar toolbar;
+    private RecyclerViewAdapter adapter;
 
+    enum Type {
+        FadeIn(new FadeInAnimator(new OvershootInterpolator(1f))),
+        FadeInDown(new FadeInDownAnimator(new OvershootInterpolator(1f))),
+        FadeInUp(new FadeInUpAnimator(new OvershootInterpolator(1f))),
+        FadeInLeft(new FadeInLeftAnimator(new OvershootInterpolator(1f))),
+        FadeInRight(new FadeInRightAnimator(new OvershootInterpolator(1f))),
+        Landing(new LandingAnimator(new OvershootInterpolator(1f))),
+        ScaleIn(new ScaleInAnimator(new OvershootInterpolator(1f))),
+        ScaleInTop(new ScaleInTopAnimator(new OvershootInterpolator(1f))),
+        ScaleInBottom(new ScaleInBottomAnimator(new OvershootInterpolator(1f))),
+        ScaleInLeft(new ScaleInLeftAnimator(new OvershootInterpolator(1f))),
+        ScaleInRight(new ScaleInRightAnimator(new OvershootInterpolator(1f))),
+        FlipInTopX(new FlipInTopXAnimator(new OvershootInterpolator(1f))),
+        FlipInBottomX(new FlipInBottomXAnimator(new OvershootInterpolator(1f))),
+        FlipInLeftY(new FlipInLeftYAnimator(new OvershootInterpolator(1f))),
+        FlipInRightY(new FlipInRightYAnimator(new OvershootInterpolator(1f))),
+        SlideInLeft(new SlideInLeftAnimator(new OvershootInterpolator(1f))),
+        SlideInRight(new SlideInRightAnimator(new OvershootInterpolator(1f))),
+        SlideInDown(new SlideInDownAnimator(new OvershootInterpolator(1f))),
+        SlideInUp(new SlideInUpAnimator(new OvershootInterpolator(1f))),
+        OvershootInRight(new OvershootInRightAnimator(1.0f)),
+        OvershootInLeft(new OvershootInLeftAnimator(1.0f));
+
+        private BaseItemAnimator mAnimator;
+
+        Type(BaseItemAnimator animator) {
+            mAnimator = animator;
+        }
+
+        public BaseItemAnimator getAnimator() {
+            return mAnimator;
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recyclerview);
         initToolbar();
+        makeData();
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 //        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));//这里用线性显示 类似于listview
 //        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));//这里用线性宫格显示 类似于grid view
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL));//这里用线性宫格显示 类似于瀑布流
+        adapter = new RecyclerViewAdapter(listData);
+        mRecyclerView.setAdapter(adapter);
+        //设置Item增加、移除动画
+        mRecyclerView.setItemAnimator(new ScaleInAnimator(new OvershootInterpolator(1f)));
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        for (Type type : Type.values()) {
+            spinnerAdapter.add(type.name());
+        }
+        spinner.setAdapter(spinnerAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mRecyclerView.setItemAnimator(Type.values()[position].getAnimator());
+                mRecyclerView.getItemAnimator().setAddDuration(500);
+                mRecyclerView.getItemAnimator().setRemoveDuration(500);
+            }
+
+            @Override public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void makeData() {
         RecyclerModel model = new RecyclerModel();
         model.title = "C";
         model.imgUrl = "http://f.hiphotos.baidu.com/image/h%3D200/sign=236c94ef2c381f3081198aa999004c67/242dd42a2834349bbe78c852cdea15ce37d3beef.jpg";
@@ -93,15 +185,42 @@ public class RecyclerViewExample extends AppCompatActivity {
         listData.add(model8);
         listData.add(model9);
         listData.add(model10);
-        mRecyclerView.setAdapter(new RecyclerViewAdapter(listData));
     }
 
     //初始化toolbar
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setLogo(R.mipmap.ic_launcher);
         toolbar.setTitle("RecyclerViewExample");
         toolbar.setTitleTextColor(Color.WHITE);
+        setSupportActionBar(toolbar);
+        toolbar.setOnMenuItemClickListener(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_recycler, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_add://添加一项
+                RecyclerModel model = new RecyclerModel();
+                model.title = "增加的一项";
+                model.imgUrl = "http://static.sporttery.cn/images/130517/18-13051G32G3-52.jpg";
+                listData.add(1,model);
+                adapter.notifyItemInserted(1);
+                break;
+            case R.id.action_remove://删除一项
+                if (listData.size() >1){
+                    listData.remove(1);
+                    adapter.notifyItemRemoved(1);
+                }
+                break;
+        }
+        return true;
     }
 
     private enum ITEM_TYPE{
@@ -111,8 +230,6 @@ public class RecyclerViewExample extends AppCompatActivity {
 
     public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ListItemViewHolder> {
         private List<RecyclerModel> mList;
-
-
 
         public RecyclerViewAdapter(List<RecyclerModel> data) {
             if (data == null) {
@@ -132,6 +249,7 @@ public class RecyclerViewExample extends AppCompatActivity {
             holder.context.setText(mList.get(position).title);
             holder.frescoDrawee.setImageURI(mList.get(position).imgUrl);
         }
+
 
         @Override
         public int getItemViewType(int position) {
