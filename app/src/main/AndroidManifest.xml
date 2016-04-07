@@ -53,6 +53,7 @@
         <activity android:name="com.example.MainActivity.SoundSeekbarActivity"/>
         <activity android:name="com.example.MainActivity.Material.MaterialMain"/>
         <activity android:name="com.example.MainActivity.Material.RecyclerViewExample"/>
+        <activity android:name="com.example.MainActivity.MarterialTransition.TransitionActivity"/>
 
 
 

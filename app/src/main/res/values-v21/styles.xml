@@ -3,6 +3,10 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        //复选框的勾选颜色
+        <item name="android:colorAccent">#00FF00</item>
+        //按钮点击颜色
+        <item name="android:colorControlHighlight">#0000FF</item>
         <!--<item name="android:fitsSystemWindows">true</item>-->
         <!--&lt;!&ndash; Status Bar &ndash;&gt;-->
         <!--<item name="android:windowTranslucentStatus">true</item>-->
