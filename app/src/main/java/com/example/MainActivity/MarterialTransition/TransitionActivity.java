@@ -32,18 +32,18 @@ public class TransitionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transition);
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new TransitionFragment())
-                    .commit();
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            ViewGroup container = (ViewGroup) findViewById(R.id.container);
-            TransitionInflater transitionInflater = TransitionInflater.from(this);
-            mTransitionManager = transitionInflater.inflateTransitionManager(R.transition.transition_manager, container);
-            mScene1 = Scene.getSceneForLayout(container, R.layout.fragment_transition_scene_1, this);
-            mScene2 = Scene.getSceneForLayout(container, R.layout.fragment_transition_scene_2, this);
-        }
+//        if (savedInstanceState == null) {
+//            getSupportFragmentManager().beginTransaction()
+//                    .add(R.id.container, new TransitionFragment())
+//                    .commit();
+//        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            ViewGroup container = (ViewGroup) findViewById(R.id.container);
+//            TransitionInflater transitionInflater = TransitionInflater.from(this);
+//            mTransitionManager = transitionInflater.inflateTransitionManager(R.transition.transition_manager, container);
+//            mScene1 = Scene.getSceneForLayout(container, R.layout.fragment_transition_scene_1, this);
+//            mScene2 = Scene.getSceneForLayout(container, R.layout.fragment_transition_scene_2, this);
+//        }
     }
 
     public void goToScene1(View view) {

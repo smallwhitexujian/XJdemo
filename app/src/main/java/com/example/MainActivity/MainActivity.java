@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.example.MainActivity.MarterialTransition.TransitionActivity;
+import com.example.MainActivity.MarterialTransition.AnimationDemo;
 import com.example.MainActivity.Material.MaterialMain;
 import com.example.MainActivity.Material.RecyclerViewExample;
 import com.willprojeck.okhttp.okhttp_text.R;
@@ -31,7 +31,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         addBtn("RecyclerView list ", 6);
         addBtn("RecyclerViewExample GridView ", 7);
         addBtn("RecyclerView 瀑布流", 8);
-        addBtn("TransitionActivity", 9);
+        addBtn("呼吸灯效果", 9);
     }
 
     private void addBtn(String text, int tag) {
@@ -89,7 +89,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 startActivity(i);
                 break;
             case 9:
-                i = new Intent(MainActivity.this, TransitionActivity.class);
+                i = new Intent(MainActivity.this, AnimationDemo.class);
                 startActivity(i);
                 break;
         }

@@ -1,6 +1,5 @@
 package com.example.MainActivity;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.ListView;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
  * Created by xujian on 16/3/23.
  * fresco图片处理
  */
-public class Fresco_Demo extends Activity implements SwipyRefreshLayout.OnRefreshListener {
+public class Fresco_Demo extends BaseActivity implements SwipyRefreshLayout.OnRefreshListener {
     private CommonAdapter<String> mAdapter = null;
     private ListView listview = null;
     private SwipyRefreshLayout mSwipyRefreshLayout;
