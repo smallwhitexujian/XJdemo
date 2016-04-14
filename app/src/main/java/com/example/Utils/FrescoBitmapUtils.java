@@ -21,6 +21,9 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
  */
 public class FrescoBitmapUtils {
     public void getImageBitmap(Context context, String url, final BitCallBack callBack) {
+        if (url== null){
+            return;
+        }
         ImageRequest imageRequest = ImageRequestBuilder
                 .newBuilderWithSource(Uri.parse(url))
                 .setProgressiveRenderingEnabled(true)

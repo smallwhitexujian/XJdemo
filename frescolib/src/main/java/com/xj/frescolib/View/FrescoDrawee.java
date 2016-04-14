@@ -57,11 +57,15 @@ public class FrescoDrawee extends SimpleDraweeView {
      * @param url       图片地址高清地址
      * @param lowResUri 图片低分辨率地址
      */
-    public void setImageURI(String url, String lowResUri) {
+    public String setImageURI(String url, String lowResUri) {
+        if (url == null || lowResUri == null){
+            return "url|lowResUrl not null";
+        }
         ImageRequest imageRequest = getImageRequest(url);
         DraweeController draweeController = getDraweeController(imageRequest, lowResUri);
         setController(draweeController);
         setHierarchy(getGenericDraweeHierarchy(mcontext));
+        return "";
     }
 
     /**
@@ -69,11 +73,15 @@ public class FrescoDrawee extends SimpleDraweeView {
      *
      * @param url 图片地址
      */
-    public void setImageURI(String url) {
+    public String setImageURI(String url){
+        if (url == null){
+            return "url|lowResUrl not null";
+        }
         ImageRequest imageRequest = getImageRequest(url);
         DraweeController draweeController = getDraweeController(imageRequest);
         setController(draweeController);
         setHierarchy(getGenericDraweeHierarchy(mcontext));
+        return "";
     }
 
     /**
@@ -86,6 +94,9 @@ public class FrescoDrawee extends SimpleDraweeView {
     }
     @Override
     public void setImageURI(Uri uri) {
+        if (uri == null){
+            return ;
+        }
         super.setImageURI(uri);
         setHierarchy(getGenericDraweeHierarchy(mcontext));
     }

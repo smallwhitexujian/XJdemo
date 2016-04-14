@@ -68,15 +68,22 @@ public class FrescoRoundView extends SimpleDraweeView {
      *
      * @param url 图片地址
      */
-    public void setImageURI(String url) {
+    public String setImageURI(String url) throws Exception{
+        if (url == null){
+            return "url|lowResUrl not null";
+        }
         setHierarchy(getGenericDraweeHierarchy(mcontext));
         ImageRequest imageRequest = getImageRequest(url);
         DraweeController draweeController = getDraweeController(imageRequest);
         setController(draweeController);
+        return "";
     }
 
     @Override
     public void setImageURI(Uri uri) {
+        if (uri == null){
+            return;
+        }
         super.setImageURI(uri);
         setHierarchy(getGenericDraweeHierarchy(mcontext));
     }
