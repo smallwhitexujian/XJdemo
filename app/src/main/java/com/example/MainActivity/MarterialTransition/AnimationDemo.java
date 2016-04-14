@@ -27,10 +27,10 @@ import com.xj.utils.utils.ToastUtils;
  */
 public class AnimationDemo extends BaseActivity implements View.OnClickListener {
     private Button btn, btn1, btn2;
-    private LinearLayout line1, animLayout;
+    private LinearLayout line1;
     private TextView textView;
     private ImageView imageView;
-    private Animation translateAnimation_in,translateAnimation_out,translate_in, scaleAnimation, rotateAnimation;
+    private Animation translateAnimation_in,translateAnimation_out,translate_in, scaleAnimation;
     private int i = 1;
 
     @Override
@@ -39,7 +39,6 @@ public class AnimationDemo extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.activity_giftanim);
         imageView = (ImageView) findViewById(R.id.img);
         line1 = (LinearLayout) findViewById(R.id.line1);
-        animLayout = (LinearLayout) findViewById(R.id.animLayout);
         textView = (TextView) findViewById(R.id.numText);
         btn = (Button) findViewById(R.id.btn);
         btn1 = (Button) findViewById(R.id.btn1);
@@ -50,7 +49,6 @@ public class AnimationDemo extends BaseActivity implements View.OnClickListener 
 
         translateAnimation_out = AnimationUtils.loadAnimation(AnimationDemo.this, R.anim.fade_out_anim);
         scaleAnimation = AnimationUtils.loadAnimation(AnimationDemo.this, R.anim.thepinanim);
-        rotateAnimation = AnimationUtils.loadAnimation(AnimationDemo.this, R.anim.breathinglamp);
 
         translateAnimation_in.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -62,9 +60,6 @@ public class AnimationDemo extends BaseActivity implements View.OnClickListener 
                 DebugLogs.d("-------+动画结束--->");
                 textView.setVisibility(View.VISIBLE);
                 textView.startAnimation(scaleAnimation);
-//                line1.clearAnimation();
-//                imageView.clearAnimation();
-//                line1.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -79,9 +74,7 @@ public class AnimationDemo extends BaseActivity implements View.OnClickListener 
 
             @Override
             public void onAnimationEnd(Animation animation) {
-//                imageView.clearAnimation();
                 line1.startAnimation(translateAnimation_out);
-//                line1.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -89,11 +82,8 @@ public class AnimationDemo extends BaseActivity implements View.OnClickListener 
 
             }
         });
-
-//        textView.startAnimation(scaleAnimation);
         line1.startAnimation(translateAnimation_in);
         imageView.startAnimation(translate_in);
-//        imageView.startAnimation(rotateAnimation);
 
         btn.setOnClickListener(this);
         btn1.setOnClickListener(this);
