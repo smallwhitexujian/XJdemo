@@ -29,8 +29,8 @@ public class AnimationDemo extends BaseActivity implements View.OnClickListener 
     private Button btn, btn1, btn2;
     private LinearLayout line1;
     private TextView textView;
-    private ImageView imageView;
-    private Animation translateAnimation_in,translateAnimation_out,translate_in, scaleAnimation;
+    private ImageView imageView,imageView2;
+    private Animation translateAnimation_in,translateAnimation_out,translate_in, scaleAnimation,freefallUp;
     private int i = 1;
 
     @Override
@@ -38,6 +38,7 @@ public class AnimationDemo extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_giftanim);
         imageView = (ImageView) findViewById(R.id.img);
+        imageView2 = (ImageView) findViewById(R.id.img2);
         line1 = (LinearLayout) findViewById(R.id.line1);
         textView = (TextView) findViewById(R.id.numText);
         btn = (Button) findViewById(R.id.btn);
@@ -46,7 +47,8 @@ public class AnimationDemo extends BaseActivity implements View.OnClickListener 
         line1.setVisibility(View.VISIBLE);
         translateAnimation_in = AnimationUtils.loadAnimation(AnimationDemo.this, R.anim.fade_in_anim);
         translate_in = AnimationUtils.loadAnimation(AnimationDemo.this, R.anim.fade2_in_anim);
-
+        freefallUp = AnimationUtils.loadAnimation(AnimationDemo.this, R.anim.free_fall_up);
+        imageView2.startAnimation(freefallUp);
         translateAnimation_out = AnimationUtils.loadAnimation(AnimationDemo.this, R.anim.fade_out_anim);
         scaleAnimation = AnimationUtils.loadAnimation(AnimationDemo.this, R.anim.thepinanim);
 
