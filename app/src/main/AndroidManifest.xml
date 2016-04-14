@@ -54,7 +54,7 @@
         <activity android:name="com.example.MainActivity.Material.MaterialMain"/>
         <activity android:name="com.example.MainActivity.Material.RecyclerViewExample"/>
         <activity android:name="com.example.MainActivity.MarterialTransition.TransitionActivity"/>
-        <activity android:name="com.example.MainActivity.MarterialTransition.GiftAnim"/>
+        <activity android:name="com.example.MainActivity.MarterialTransition.AnimationDemo"/>
 
 
 

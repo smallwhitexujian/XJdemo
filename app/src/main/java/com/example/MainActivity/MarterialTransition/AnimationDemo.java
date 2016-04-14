@@ -1,12 +1,18 @@
 package com.example.MainActivity.MarterialTransition;
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.MainActivity.BaseActivity;
 import com.willprojeck.okhttp.okhttp_text.R;
+import com.xj.utils.utils.DebugLogs;
+import com.xj.utils.utils.ToastUtils;
 
 /**
  * Created by:      xujian
@@ -19,19 +25,102 @@ import com.willprojeck.okhttp.okhttp_text.R;
  * 16/4/13          xujian         ${version}
  * Why & What is modified(修改原因):
  */
-public class AnimationDemo extends BaseActivity{
+public class AnimationDemo extends BaseActivity implements View.OnClickListener {
+    private Button btn, btn1, btn2;
+    private LinearLayout line1, animLayout;
+    private TextView textView;
+    private ImageView imageView;
+    private Animation translateAnimation_in,translateAnimation_out,translate_in, scaleAnimation, rotateAnimation;
+    private int i = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_giftanim);
-        final ImageView imageView = (ImageView)findViewById(R.id.img);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Animation rotateAnimation = AnimationUtils.loadAnimation(AnimationDemo.this, R.anim.breathinglamp);
-                imageView.startAnimation(rotateAnimation);
-            }
-        }).start();
+        imageView = (ImageView) findViewById(R.id.img);
+        line1 = (LinearLayout) findViewById(R.id.line1);
+        animLayout = (LinearLayout) findViewById(R.id.animLayout);
+        textView = (TextView) findViewById(R.id.numText);
+        btn = (Button) findViewById(R.id.btn);
+        btn1 = (Button) findViewById(R.id.btn1);
+        btn2 = (Button) findViewById(R.id.btn2);
+        line1.setVisibility(View.VISIBLE);
+        translateAnimation_in = AnimationUtils.loadAnimation(AnimationDemo.this, R.anim.fade_in_anim);
+        translate_in = AnimationUtils.loadAnimation(AnimationDemo.this, R.anim.fade2_in_anim);
 
+        translateAnimation_out = AnimationUtils.loadAnimation(AnimationDemo.this, R.anim.fade_out_anim);
+        scaleAnimation = AnimationUtils.loadAnimation(AnimationDemo.this, R.anim.thepinanim);
+        rotateAnimation = AnimationUtils.loadAnimation(AnimationDemo.this, R.anim.breathinglamp);
+
+        translateAnimation_in.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                DebugLogs.d("-------+动画结束--->");
+                textView.setVisibility(View.VISIBLE);
+                textView.startAnimation(scaleAnimation);
+//                line1.clearAnimation();
+//                imageView.clearAnimation();
+//                line1.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+//                imageView.clearAnimation();
+                line1.startAnimation(translateAnimation_out);
+//                line1.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+//        textView.startAnimation(scaleAnimation);
+        line1.startAnimation(translateAnimation_in);
+        imageView.startAnimation(translate_in);
+//        imageView.startAnimation(rotateAnimation);
+
+        btn.setOnClickListener(this);
+        btn1.setOnClickListener(this);
+        btn2.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn:
+                line1.setVisibility(View.VISIBLE);
+                line1.startAnimation(translateAnimation_in);
+                imageView.startAnimation(translate_in);
+                translateAnimation_in.reset();
+                translate_in.reset();
+                break;
+            case R.id.btn1:
+                ToastUtils.showToast(AnimationDemo.this,"添加数据");
+                break;
+            case R.id.btn2:
+                i++;
+                String str = "x"+i;
+                translateAnimation_out.start();
+                textView.setText(str);
+                textView.startAnimation(scaleAnimation);
+                break;
+        }
     }
 }
