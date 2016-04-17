@@ -49,7 +49,7 @@ dependencies {
     //下载okHttp安装包
     compile 'com.squareup.okhttp3:okhttp:3.0.1'
     compile 'com.squareup.okio:okio:1.5.0'
-    compile 'com.linsea:opendanmaku:1.0.0@aar'
     compile project(':utilitylib')
     compile project(':frescolib')
+    compile 'com.linsea:opendanmaku:1.0.0@aar'
 }
