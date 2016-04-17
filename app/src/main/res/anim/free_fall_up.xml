@@ -28,7 +28,7 @@
         android:startOffset="800"
         android:toYDelta="100%" />
     <alpha
-        android:duration="400"
+        android:duration="500"
         android:fromAlpha="0.9"
         android:interpolator="@android:anim/accelerate_interpolator"
         android:startOffset="1200"

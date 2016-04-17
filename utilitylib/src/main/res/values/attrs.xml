@@ -3,8 +3,8 @@
         <attr name="roundWidth" format="dimension" />
         <attr name="roundHeight" format="dimension" />
     </declare-styleable>
-    
-     <declare-styleable name="PullToRefresh">
+
+    <declare-styleable name="PullToRefresh">
         <attr name="adapterViewBackground" format="reference|color" />
         <attr name="headerBackground" format="reference|color" />
         <attr name="headerTextColor" format="color" />
