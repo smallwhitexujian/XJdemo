@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import com.example.MainActivity.MarterialTransition.AnimationDemo;
 import com.example.MainActivity.Material.MaterialMain;
 import com.example.MainActivity.Material.RecyclerViewExample;
+import com.example.MainActivity.Recycleview.RecycleviewActivity;
 import com.willprojeck.okhttp.okhttp_text.R;
 
 
@@ -32,6 +33,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
         addBtn("RecyclerViewExample GridView ", 7);
         addBtn("RecyclerView 瀑布流", 8);
         addBtn("呼吸灯效果", 9);
+        addBtn("键盘遮挡", 10);
+        addBtn("RecycleviewActivity", 11);
     }
 
     private void addBtn(String text, int tag) {
@@ -90,6 +93,14 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 break;
             case 9:
                 i = new Intent(MainActivity.this, AnimationDemo.class);
+                startActivity(i);
+                break;
+            case 10:
+                i = new Intent(MainActivity.this, KeyboardView.class);
+                startActivity(i);
+                break;
+            case 11:
+                i = new Intent(MainActivity.this, RecycleviewActivity.class);
                 startActivity(i);
                 break;
         }

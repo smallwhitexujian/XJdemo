@@ -57,6 +57,10 @@ public class HttpManager {
             String strUrl = restructureURL(Method.GET, url, params);
             request = new Request.Builder().url(strUrl).build();
         } else if (method == Method.POST) {
+            if (params== null){
+                ToastUtils.showToast(mActivity,"params is not null");
+                return;
+            }
             FormBody.Builder builder = new FormBody.Builder();
             for (Map.Entry<String, String> entry : params.entrySet()) {
                 builder.add(entry.getKey(), entry.getValue());
@@ -89,7 +93,7 @@ public class HttpManager {
     /**
      * post body json数据，get请求
      * 直接返回结果
-     *     主线程消耗模式
+     *     主线程消耗模式（一般情况禁止使用）
      * @param url    请求地址
      * @param params 参数
      */

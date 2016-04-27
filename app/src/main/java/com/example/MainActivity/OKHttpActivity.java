@@ -80,10 +80,10 @@ public class OKHttpActivity extends Activity implements View.OnClickListener {
                 };
                 HttpManager.Request(OKHttpActivity.this,HttpManager.Method.GET, url, callBack,null);
                 break;
-            case 1://无回调形式
-                url = "http://apitest.vvago.com/Webservers/Bar/BarInfo";
-                text.setText(HttpManager.Request(url,HttpManager.Method.GET,null));
-                break;
+//            case 1://无回调形式
+//                url = "http://apitest.vvago.com/Webservers/Bar/BarInfo";
+//                text.setText(HttpManager.Request(url,HttpManager.Method.GET,null));
+//                break;
 
             case 2://get请求
                 url = "http://www.fresco-cn.org";
@@ -105,10 +105,10 @@ public class OKHttpActivity extends Activity implements View.OnClickListener {
                 };
                 HttpManager.Request(this,HttpManager.Method.POST, url, callBack, params);
                 break;
-            case 4://post 发送的内容包裹在http body中，
-                url = "http://apitest.vvago.com/Webservers/Bar/BarInfoEidt";
-                text.setText(HttpManager.Request(url, HttpManager.Method.POST,params));
-                break;
+//            case 4://post 发送的内容包裹在http body中，
+//                url = "http://apitest.vvago.com/Webservers/Bar/BarInfoEidt";
+//                text.setText(HttpManager.Request(url, HttpManager.Method.POST,params));
+//                break;
 
             case 5://post from表单提交
                 url = "http://apitest.vvago.com/Webservers/Bar/BarInfoEidt";
@@ -120,10 +120,10 @@ public class OKHttpActivity extends Activity implements View.OnClickListener {
                 };
                 HttpManager.Request(this,HttpManager.Method.POST, url, callBack, params);
                 break;
-            case 6:
-                url = "http://apitest.vvago.com/Webservers/Bar/BarInfoEidt";
-                text.setText(HttpManager.Request(url,HttpManager.Method.POST,params));
-                break;
+//            case 6:
+//                url = "http://apitest.vvago.com/Webservers/Bar/BarInfoEidt";
+//                text.setText(HttpManager.Request(url,HttpManager.Method.POST,params));
+//                break;
         }
     }
 }
