@@ -96,6 +96,7 @@
 #忽略自己项目调用
 -keep class com.example.Model.** { *; }
 -keep class com.xj.utils.utils**{*;}
+-keep class com.example.MainActivity.MarterialTransition.AnimationDemo
 
 # fresco
 -dontwarn com.xj.frescolib.**
@@ -113,10 +114,3 @@
 #gson
 -keep class sun.misc.** { *; }
 -keep class com.google.gson.examples.android.model.** { *; }
-
-
-# ProGuard configurations for NetworkBench Lens
-#-keep class com.networkbench.** { *; }
-#-dontwarn com.networkbench.**
-#-keepattributes Exceptions, Signature, InnerClasses
-# End NetworkBench Lens
