@@ -10,7 +10,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.xj.frescolib;
+package com.xj.frescolib.Config;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 
 import com.example.Service.BackgroundService;
-import com.xj.frescolib.FrescoHelper;
+import com.xj.frescolib.Config.FrescoHelper;
 
 /**
  * Created by xujian on 16/2/20.

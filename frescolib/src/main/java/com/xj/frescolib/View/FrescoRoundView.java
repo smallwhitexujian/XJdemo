@@ -22,8 +22,8 @@ import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.image.QualityInfo;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
-import com.xj.frescolib.FrescoConfigConstants;
-import com.xj.frescolib.RoundBuilder;
+import com.xj.frescolib.Config.FrescoConfigConstants;
+import com.xj.frescolib.Config.RoundBuilder;
 
 /**
  * Created by xujian on 16/3/23.

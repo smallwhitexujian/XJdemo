@@ -9,9 +9,6 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
-import com.facebook.common.executors.CallerThreadExecutor;
-import com.facebook.common.references.CloseableReference;
-import com.facebook.datasource.DataSource;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.controller.ControllerListener;
@@ -27,7 +24,7 @@ import com.facebook.imagepipeline.request.BasePostprocessor;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.facebook.imagepipeline.request.Postprocessor;
-import com.xj.frescolib.FrescoConfigConstants;
+import com.xj.frescolib.Config.FrescoConfigConstants;
 
 /**
  * Created by xujian on 16/3/23.

@@ -7,9 +7,9 @@ android {
     defaultConfig {
         applicationId "com.willprojeck.okhttp.okhttp_text"
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 16
         versionCode 1
-        versionName "1.0.1"
+        versionName "1.0.2"
     }
 
     //改变指向目录
@@ -29,8 +29,16 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles 'proguard-rules.pro'
+            //混淆开关
+            minifyEnabled true
+            //是否zip对齐
+            zipAlignEnabled true
+            //是否打开debuggable开关
+            debuggable false
+            //是否打开jniDebuggable开关
+            jniDebuggable false
+            //混淆配置文件
+            proguardFiles  'proguard-rules.pro'
         }
     }
 }
