@@ -32,20 +32,18 @@ import com.xj.frescolib.Config.FrescoConfigConstants;
  * 重载SimpleDrawView
  */
 public class FrescoDrawee extends SimpleDraweeView {
-    private Context mcontext ;
+    private GenericDraweeHierarchy mhierarchy;
+
     public FrescoDrawee(Context context) {
         super(context);
-        mcontext = context;
     }
 
     public FrescoDrawee(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mcontext = context;
     }
 
     public FrescoDrawee(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        mcontext = context;
     }
 
     /**
@@ -55,13 +53,12 @@ public class FrescoDrawee extends SimpleDraweeView {
      * @param lowResUri 图片低分辨率地址
      */
     public String setImageURI(String url, String lowResUri) {
-        if (url == null || lowResUri == null){
+        if (url == null || lowResUri == null) {
             return "url|lowResUrl not null";
         }
         ImageRequest imageRequest = getImageRequest(url);
         DraweeController draweeController = getDraweeController(imageRequest, lowResUri);
         setController(draweeController);
-        setHierarchy(getGenericDraweeHierarchy(mcontext));
         return "";
     }
 
@@ -70,41 +67,45 @@ public class FrescoDrawee extends SimpleDraweeView {
      *
      * @param url 图片地址
      */
-    public String setImageURI(String url){
-        if (url == null){
+    public String setImageURI(String url) {
+        if (url == null) {
             return "url|lowResUrl not null";
         }
-        ImageRequest imageRequest = getImageRequest(url);
-        DraweeController draweeController = getDraweeController(imageRequest);
-        setController(draweeController);
-        setHierarchy(getGenericDraweeHierarchy(mcontext));
+        if (!isInEditMode()) {
+            ImageRequest imageRequest = getImageRequest(url);
+            DraweeController draweeController = getDraweeController(imageRequest);
+            setController(draweeController);
+        }
         return "";
     }
 
     /**
      * 设置默认图
+     *
      * @param defutImage 默认图
      */
-    public void setDefutImage(Drawable defutImage){
-        setHierarchy(new GenericDraweeHierarchyBuilder(mcontext.getResources())
-                .setPlaceholderImage(defutImage).build());
+    public void setDefutImage(Drawable defutImage) {
+        if (!isInEditMode()) {
+            mhierarchy.reset();
+            mhierarchy.setPlaceholderImage(defutImage, ScalingUtils.ScaleType.FOCUS_CROP);
+        }
     }
+
     @Override
     public void setImageURI(Uri uri) {
-        if (uri == null){
-            return ;
+        if (uri == null) {
+            return;
         }
         super.setImageURI(uri);
-        setHierarchy(getGenericDraweeHierarchy(mcontext));
     }
 
     /**
      * 设置图片填充模式
      */
-    public void setImageImageScaleType(ScalingUtils.ScaleType scaleType){
-        setHierarchy(new GenericDraweeHierarchyBuilder(mcontext.getResources())
-                .setActualImageScaleType(scaleType)
-                .build());
+    public void setImageImageScaleType(ScalingUtils.ScaleType scaleType) {
+        if (!isInEditMode()) {
+            mhierarchy.setActualImageScaleType(scaleType);
+        }
     }
 
     //图片解码
@@ -137,6 +138,17 @@ public class FrescoDrawee extends SimpleDraweeView {
                 .setOldController(getController())//DraweeController复用
                 .setTapToRetryEnabled(true)//点击重新加载图
                 .build();
+    }
+
+
+    @Override
+    public void setHierarchy(GenericDraweeHierarchy hierarchy) {
+        super.setHierarchy(hierarchy);
+        if (!isInEditMode()) {
+            mhierarchy = hierarchy;
+            hierarchy.setFailureImage(FrescoConfigConstants.sErrorDrawable);
+            hierarchy.setPlaceholderImage(FrescoConfigConstants.sPlaceholderDrawable, ScalingUtils.ScaleType.CENTER);
+        }
     }
 
     /**
@@ -192,10 +204,11 @@ public class FrescoDrawee extends SimpleDraweeView {
                 .setAutoPlayAnimations(true)//自动播放图片动画
                 .setImageRequest(imageRequest)//设置单个图片请求～～～不可与setFirstAvailableImageRequests共用，配合setLowResImageRequest为高分辨率的图
                 .setOldController(getController())//DraweeController复用
-                .setTapToRetryEnabled(true)//点击重新加载图
+                .setTapToRetryEnabled(false)//点击重新加载图
 //                .setControllerListener(controllerListener)
                 .build();
     }
+
     //Drawees   DraweeHierarchy  组织
     public GenericDraweeHierarchy getGenericDraweeHierarchy(Context context) {
         return new GenericDraweeHierarchyBuilder(context.getResources())

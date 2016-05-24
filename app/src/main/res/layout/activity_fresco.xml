@@ -8,6 +8,17 @@
         android:id="@+id/frescoView"
         android:layout_width="match_parent"
         android:layout_height="300dp" />
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="切换图片"/>
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="设置默认图"/>
     <com.xj.utils.View.RefreshLayout.SwipyRefreshLayout
         android:id="@+id/pullToRefreshView"
         android:layout_width="match_parent"

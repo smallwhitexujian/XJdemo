@@ -33,34 +33,19 @@ import com.xj.frescolib.Config.RoundBuilder;
  */
 public class FrescoRoundView extends SimpleDraweeView {
     private RoundingParams roundingParams;
-    private Context mcontext;
+    private GenericDraweeHierarchy mHierarchy;
     public static int fadeDuration = 300;
 
     public FrescoRoundView(Context context) {
         super(context);
-        init(context);
     }
 
     public FrescoRoundView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
     }
 
     public FrescoRoundView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init(context);
-    }
-
-    private void init(Context context) {
-        this.mcontext = context;
-        RoundBuilder roundBuilder = new RoundBuilder();
-        roundingParams = roundBuilder
-                .setRoundAsCircle(true)//设置是否为圆形
-                .setBorder(Color.TRANSPARENT, 1)//设置边框颜色和边框大小
-//                .setOverlayColor(Color.WHITE)//覆盖颜色，如果不设置覆盖颜色gif图会出现问题
-                .setCornersRadius(10)//设置圆角
-                .setRoundingMethod(RoundingParams.RoundingMethod.BITMAP_ONLY)//设置圆形模式
-                .build();
     }
 
     /**
@@ -68,14 +53,15 @@ public class FrescoRoundView extends SimpleDraweeView {
      *
      * @param url 图片地址
      */
-    public String setImageURI(String url) throws Exception{
+    public String setImageURI(String url) {
         if (url == null){
             return "url|lowResUrl not null";
         }
-        setHierarchy(getGenericDraweeHierarchy(mcontext));
-        ImageRequest imageRequest = getImageRequest(url);
-        DraweeController draweeController = getDraweeController(imageRequest);
-        setController(draweeController);
+        if (!isInEditMode()){
+            ImageRequest imageRequest = getImageRequest(url);
+            DraweeController draweeController = getDraweeController(imageRequest);
+            setController(draweeController);
+        }
         return "";
     }
 
@@ -85,7 +71,6 @@ public class FrescoRoundView extends SimpleDraweeView {
             return;
         }
         super.setImageURI(uri);
-        setHierarchy(getGenericDraweeHierarchy(mcontext));
     }
 
     public void setFadeDuration(int Duration){
@@ -93,8 +78,29 @@ public class FrescoRoundView extends SimpleDraweeView {
     }
 
     public void setDefutImage(Drawable defutImage) {
-        setHierarchy(new GenericDraweeHierarchyBuilder(mcontext.getResources())
-                .setPlaceholderImage(defutImage).build());
+        if (!isInEditMode()){
+            mHierarchy.reset();
+            mHierarchy.setPlaceholderImage(defutImage, ScalingUtils.ScaleType.CENTER);
+        }
+    }
+
+    @Override
+    public void setHierarchy(GenericDraweeHierarchy hierarchy) {
+        super.setHierarchy(hierarchy);
+        if (!isInEditMode()){
+            mHierarchy = hierarchy;
+            RoundBuilder roundBuilder = new RoundBuilder();
+            roundingParams = roundBuilder
+                    .setRoundAsCircle(true)//设置是否为圆形
+                    .setBorder(Color.TRANSPARENT, 1)//设置边框颜色和边框大小
+                    .setCornersRadius(10)//设置圆角
+                    .setRoundingMethod(RoundingParams.RoundingMethod.BITMAP_ONLY)//设置圆形模式
+                    .build();
+            hierarchy.setFailureImage(FrescoConfigConstants.sErrorDrawable);
+            hierarchy.setPlaceholderImage(FrescoConfigConstants.sPlaceholderDrawable, ScalingUtils.ScaleType.CENTER);
+            hierarchy.setRoundingParams(roundingParams);
+            hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.FOCUS_CROP);
+        }
     }
 
     //图片解码
@@ -175,7 +181,7 @@ public class FrescoRoundView extends SimpleDraweeView {
                 .setAutoPlayAnimations(true)//自动播放图片动画
                 .setImageRequest(imageRequest)//设置单个图片请求～～～不可与setFirstAvailableImageRequests共用，配合setLowResImageRequest为高分辨率的图
                 .setOldController(getController())//DraweeController复用
-                .setTapToRetryEnabled(true)//点击重新加载图
+                .setTapToRetryEnabled(false)//点击重新加载图
 //                .setControllerListener(controllerListener)
                 .build();
     }
