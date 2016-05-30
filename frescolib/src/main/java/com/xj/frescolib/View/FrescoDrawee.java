@@ -26,6 +26,8 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.facebook.imagepipeline.request.Postprocessor;
 import com.xj.frescolib.Config.FrescoConfigConstants;
 
+import java.io.File;
+
 /**
  * Created by xujian on 16/3/23.
  * 支持gif图 高清和低分辨图替换
@@ -33,6 +35,7 @@ import com.xj.frescolib.Config.FrescoConfigConstants;
  */
 public class FrescoDrawee extends SimpleDraweeView {
     private GenericDraweeHierarchy mhierarchy;
+    private Drawable DefutImage;
 
     public FrescoDrawee(Context context) {
         super(context);
@@ -56,9 +59,14 @@ public class FrescoDrawee extends SimpleDraweeView {
         if (url == null || lowResUri == null) {
             return "url|lowResUrl not null";
         }
-        ImageRequest imageRequest = getImageRequest(url);
-        DraweeController draweeController = getDraweeController(imageRequest, lowResUri);
-        setController(draweeController);
+        if((url.startsWith("http") || url.startsWith("https")) && (lowResUri.startsWith("http") || lowResUri.startsWith("https"))){
+            ImageRequest imageRequest = getImageRequest(url);
+            DraweeController draweeController = getDraweeController(imageRequest, lowResUri);
+            setController(draweeController);
+        }else{
+            Uri uri = Uri.fromFile(new File(url));
+            setImageURI(uri);
+        }
         return "";
     }
 
@@ -71,10 +79,16 @@ public class FrescoDrawee extends SimpleDraweeView {
         if (url == null) {
             return "url|lowResUrl not null";
         }
-        if (!isInEditMode()) {
-            ImageRequest imageRequest = getImageRequest(url);
-            DraweeController draweeController = getDraweeController(imageRequest);
-            setController(draweeController);
+        Uri uri;
+        if(url.startsWith("http") || url.startsWith("https")){
+            if (!isInEditMode()) {
+                ImageRequest imageRequest = getImageRequest(url);
+                DraweeController draweeController = getDraweeController(imageRequest);
+                setController(draweeController);
+            }
+        }else{
+            uri = Uri.fromFile(new File(url));
+            setImageURI(uri);
         }
         return "";
     }
@@ -85,6 +99,7 @@ public class FrescoDrawee extends SimpleDraweeView {
      * @param defutImage 默认图
      */
     public void setDefutImage(Drawable defutImage) {
+        DefutImage = defutImage;
         if (!isInEditMode()) {
             mhierarchy.reset();
             mhierarchy.setPlaceholderImage(defutImage, ScalingUtils.ScaleType.FOCUS_CROP);
@@ -146,8 +161,6 @@ public class FrescoDrawee extends SimpleDraweeView {
         super.setHierarchy(hierarchy);
         if (!isInEditMode()) {
             mhierarchy = hierarchy;
-            hierarchy.setFailureImage(FrescoConfigConstants.sErrorDrawable);
-            hierarchy.setPlaceholderImage(FrescoConfigConstants.sPlaceholderDrawable, ScalingUtils.ScaleType.CENTER);
         }
     }
 
@@ -212,8 +225,6 @@ public class FrescoDrawee extends SimpleDraweeView {
     //Drawees   DraweeHierarchy  组织
     public GenericDraweeHierarchy getGenericDraweeHierarchy(Context context) {
         return new GenericDraweeHierarchyBuilder(context.getResources())
-                .setFailureImage(FrescoConfigConstants.sErrorDrawable)//fresco:failureImage="@drawable/error"失败图
-                .setPlaceholderImage(FrescoConfigConstants.sPlaceholderDrawable)//fresco:placeholderImage="@color/wait_color"占位图
                 .build();
     }
 }

@@ -45,8 +45,6 @@ public class FrescoConfigConstants {
 
     private static ImagePipelineConfig sImagePipelineConfig;
     //默认加载图片和失败图片
-    public static Drawable sPlaceholderDrawable;//加载前的图片
-    public static Drawable sErrorDrawable;//加载之后的动画
 
     private FrescoConfigConstants() {
 

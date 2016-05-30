@@ -47,7 +47,7 @@ public class AnimationDemo extends BaseActivity implements View.OnClickListener 
         line1.setVisibility(View.VISIBLE);
         translateAnimation_in = AnimationUtils.loadAnimation(AnimationDemo.this, R.anim.fade_in_anim);
         translate_in = AnimationUtils.loadAnimation(AnimationDemo.this, R.anim.fade2_in_anim);
-        freefallUp = AnimationUtils.loadAnimation(AnimationDemo.this, R.anim.free_fall_up);
+        freefallUp = AnimationUtils.loadAnimation(AnimationDemo.this, R.anim.amin_shock);
         imageView2.startAnimation(freefallUp);
         translateAnimation_out = AnimationUtils.loadAnimation(AnimationDemo.this, R.anim.fade_out_anim);
         scaleAnimation = AnimationUtils.loadAnimation(AnimationDemo.this, R.anim.thepinanim);

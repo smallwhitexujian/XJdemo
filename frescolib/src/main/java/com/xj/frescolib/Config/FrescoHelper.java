@@ -2,6 +2,7 @@ package com.xj.frescolib.Config;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipeline;
@@ -19,43 +20,10 @@ public class FrescoHelper {
      * @param context .
      */
     public static void frescoInit(Context context) {
-        init();//配置占位图
         ImagePipelineConfig config = FrescoConfigConstants.getImagePipelineConfig(context);
         Fresco.initialize(context, config);
     }
 
-    /**
-     * 设置默认图
-     */
-    @SuppressWarnings("deprecation")
-    public static void init() {
-        if (FrescoConfigConstants.sPlaceholderDrawable == null) {
-            FrescoConfigConstants.sPlaceholderDrawable = new ColorDrawable(0xFFe1e4eb);
-        }
-        if (FrescoConfigConstants.sErrorDrawable == null) {
-            FrescoConfigConstants.sErrorDrawable = new ColorDrawable(0xFFff9999);
-        }
-    }
-
-    /**
-     * 设置占位符
-     *
-     * @param context  .
-     * @param drawable 图片资源
-     */
-    public static void setPlaceHolderDrawable(Context context, int drawable) {
-        FrescoConfigConstants.sPlaceholderDrawable = context.getResources().getDrawable(drawable, null);
-    }
-
-    /**
-     * 设置加载失败的图
-     *
-     * @param context  .
-     * @param drawable 图片资源
-     */
-    public static void setErrorDrawable(Context context, int drawable) {
-        FrescoConfigConstants.sErrorDrawable = context.getResources().getDrawable(drawable, null);
-    }
 
     /**
      * 清理所有缓存

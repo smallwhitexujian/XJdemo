@@ -22,8 +22,9 @@ import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.image.QualityInfo;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
-import com.xj.frescolib.Config.FrescoConfigConstants;
 import com.xj.frescolib.Config.RoundBuilder;
+
+import java.io.File;
 
 /**
  * Created by xujian on 16/3/23.
@@ -35,6 +36,7 @@ public class FrescoRoundView extends SimpleDraweeView {
     private RoundingParams roundingParams;
     private GenericDraweeHierarchy mHierarchy;
     public static int fadeDuration = 300;
+    private Drawable defutImage;
 
     public FrescoRoundView(Context context) {
         super(context);
@@ -54,31 +56,37 @@ public class FrescoRoundView extends SimpleDraweeView {
      * @param url 图片地址
      */
     public String setImageURI(String url) {
-        if (url == null){
+        if (url == null) {
             return "url|lowResUrl not null";
         }
-        if (!isInEditMode()){
-            ImageRequest imageRequest = getImageRequest(url);
-            DraweeController draweeController = getDraweeController(imageRequest);
-            setController(draweeController);
+        if(url.startsWith("http") || url.startsWith("https")){
+            if (!isInEditMode()) {
+                ImageRequest imageRequest = getImageRequest(url);
+                DraweeController draweeController = getDraweeController(imageRequest);
+                setController(draweeController);
+            }
+        }else {
+            Uri uri = Uri.fromFile(new File(url));
+            setImageURI(uri);
         }
         return "";
     }
 
     @Override
     public void setImageURI(Uri uri) {
-        if (uri == null){
+        if (uri == null) {
             return;
         }
         super.setImageURI(uri);
     }
 
-    public void setFadeDuration(int Duration){
+    public void setFadeDuration(int Duration) {
         fadeDuration = Duration;
     }
 
-    public void setDefutImage(Drawable defutImage) {
-        if (!isInEditMode()){
+    public void setDefutImage(Drawable deImage) {
+        defutImage = deImage;
+        if (!isInEditMode()) {
             mHierarchy.reset();
             mHierarchy.setPlaceholderImage(defutImage, ScalingUtils.ScaleType.CENTER);
         }
@@ -87,7 +95,7 @@ public class FrescoRoundView extends SimpleDraweeView {
     @Override
     public void setHierarchy(GenericDraweeHierarchy hierarchy) {
         super.setHierarchy(hierarchy);
-        if (!isInEditMode()){
+        if (!isInEditMode()) {
             mHierarchy = hierarchy;
             RoundBuilder roundBuilder = new RoundBuilder();
             roundingParams = roundBuilder
@@ -96,8 +104,6 @@ public class FrescoRoundView extends SimpleDraweeView {
                     .setCornersRadius(10)//设置圆角
                     .setRoundingMethod(RoundingParams.RoundingMethod.BITMAP_ONLY)//设置圆形模式
                     .build();
-            hierarchy.setFailureImage(FrescoConfigConstants.sErrorDrawable);
-            hierarchy.setPlaceholderImage(FrescoConfigConstants.sPlaceholderDrawable, ScalingUtils.ScaleType.CENTER);
             hierarchy.setRoundingParams(roundingParams);
             hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.FOCUS_CROP);
         }
@@ -130,8 +136,6 @@ public class FrescoRoundView extends SimpleDraweeView {
         return new GenericDraweeHierarchyBuilder(context.getResources())
 //                .reset()//重置
 //                .setFadeDuration(fadeDuration)//fresco:fadeDuration="300"加载图片动画时间
-                .setFailureImage(FrescoConfigConstants.sErrorDrawable)//fresco:failureImage="@drawable/error"失败图
-                .setPlaceholderImage(FrescoConfigConstants.sPlaceholderDrawable, ScalingUtils.ScaleType.CENTER)//fresco:placeholderImage="@color/wait_color"占位图
 //                .setProgressBarImage(new ProgressBarDrawable())//进度条fresco:progressBarImage="@drawable/progress_bar"进度条
                 .setRoundingParams(roundingParams)//圆形/圆角fresco:roundAsCircle="true"圆形
                 .setActualImageScaleType(ScalingUtils.ScaleType.FOCUS_CROP)
