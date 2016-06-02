@@ -102,7 +102,7 @@ public class FrescoDrawee extends SimpleDraweeView {
         DefutImage = defutImage;
         if (!isInEditMode()) {
             mhierarchy.reset();
-            mhierarchy.setPlaceholderImage(defutImage, ScalingUtils.ScaleType.FOCUS_CROP);
+            mhierarchy.setPlaceholderImage(defutImage, ScalingUtils.ScaleType.CENTER);
         }
     }
 
