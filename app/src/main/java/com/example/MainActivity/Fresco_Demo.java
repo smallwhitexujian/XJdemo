@@ -25,8 +25,8 @@ public class Fresco_Demo extends BaseActivity implements SwipyRefreshLayout.OnRe
     private SwipyRefreshLayout mSwipyRefreshLayout;
     private ArrayList<String> list = new ArrayList<>();
     private FrescoDrawee frescoview;
-    private String url1,url2,url3,url4,url5,url6,url7,url8,url9,url10;
-    private Button btn,btn2;
+    private String url1, url2, url3, url4, url5, url6, url7, url8, url9, url10;
+    private Button btn, btn2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +35,6 @@ public class Fresco_Demo extends BaseActivity implements SwipyRefreshLayout.OnRe
         initView();
         initData();
         frescoview.setImageURI(url1);
-//        FrescoBitmapUtils frescoBitmapUtils = new FrescoBitmapUtils();
-//        frescoBitmapUtils.getImageBitmap(Fresco_Demo.this, url1, new FrescoBitmapUtils.BitCallBack() {
-//            @Override
-//            public void onNewResultImpl(final Bitmap bitmap) {
-//                DebugLogs.d("---bitmap--->"+bitmap);
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        frescoview.setImageBitmap(bitmap);
-//                    }
-//                });
-//            }
-//        });
         mAdapter = new CommonAdapter<String>(Fresco_Demo.this, list, R.layout.item_layou) {
             @Override
             public void convert(ViewHolder helper, String item, int position) {
@@ -59,11 +46,12 @@ public class Fresco_Demo extends BaseActivity implements SwipyRefreshLayout.OnRe
 
     private void initView() {
         listview = (ListView) findViewById(R.id.list_item);
-        frescoview = (FrescoDrawee)findViewById(R.id.frescoView);
-        btn = (Button)findViewById(R.id.btn);
-        btn2 = (Button)findViewById(R.id.btn2);
+        frescoview = (FrescoDrawee) findViewById(R.id.frescoView);
+        btn = (Button) findViewById(R.id.btn);
+        btn2 = (Button) findViewById(R.id.btn2);
         mSwipyRefreshLayout = (SwipyRefreshLayout) findViewById(R.id.pullToRefreshView);
         mSwipyRefreshLayout.setOnRefreshListener(this);
+        mSwipyRefreshLayout.setRefreshing(true);
         mSwipyRefreshLayout.setDirection(SwipyRefreshLayoutDirection.BOTH);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +91,22 @@ public class Fresco_Demo extends BaseActivity implements SwipyRefreshLayout.OnRe
         list.add(url9);
         list.add(url0);
         list.add(url10);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(10000);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mSwipyRefreshLayout.setRefreshing(false);
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     @Override

@@ -345,19 +345,24 @@ public class SwipyRefreshLayout extends ViewGroup {
      *
      * @param refreshing Whether or not the view should show refresh progress.
      */
-    public void setRefreshing(boolean refreshing) {
+    public void setRefreshing(final boolean refreshing) {
         if (refreshing && mRefreshing != refreshing) {
-            // scale and show
-            mRefreshing = refreshing;
-            int endTarget = 0;
-            if (!mUsingCustomStart) {
-                endTarget = (int) (mSpinnerFinalOffset + mOriginalOffsetTop);
-            } else {
-                endTarget = (int) mSpinnerFinalOffset;
-            }
-            setTargetOffsetTopAndBottom(endTarget - mCurrentTargetOffsetTop,true /* requires update */);
-            mNotify = false;
-            startScaleUpAnimation(mRefreshListener);
+            post(new Runnable() {
+                @Override
+                public void run() {
+                    // scale and show
+                    mRefreshing = refreshing;
+                    int endTarget = 0;
+                    if (!mUsingCustomStart) {
+                        endTarget = (int) (mSpinnerFinalOffset + mOriginalOffsetTop);
+                    } else {
+                        endTarget = (int) mSpinnerFinalOffset;
+                    }
+                    setTargetOffsetTopAndBottom(endTarget - mCurrentTargetOffsetTop,true /* requires update */);
+                    mNotify = false;
+                    startScaleUpAnimation(mRefreshListener);
+                }
+            });
         } else {
             setRefreshing(refreshing, false /* notify */);
         }

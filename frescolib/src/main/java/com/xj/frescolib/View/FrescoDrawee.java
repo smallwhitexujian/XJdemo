@@ -24,7 +24,6 @@ import com.facebook.imagepipeline.request.BasePostprocessor;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.facebook.imagepipeline.request.Postprocessor;
-import com.xj.frescolib.Config.FrescoConfigConstants;
 
 import java.io.File;
 
