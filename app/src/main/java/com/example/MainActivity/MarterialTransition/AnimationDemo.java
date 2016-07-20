@@ -1,5 +1,6 @@
 package com.example.MainActivity.MarterialTransition;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -9,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.MainActivity.BaseActivity;
 import com.willprojeck.okhttp.okhttp_text.R;
 import com.xj.utils.utils.DebugLogs;
 import com.xj.utils.utils.ToastUtils;
@@ -25,7 +25,7 @@ import com.xj.utils.utils.ToastUtils;
  * 16/4/13          xujian         ${version}
  * Why & What is modified(修改原因):
  */
-public class AnimationDemo extends BaseActivity implements View.OnClickListener {
+public class AnimationDemo extends Activity implements View.OnClickListener {
     private Button btn, btn1, btn2;
     private LinearLayout line1;
     private TextView textView;

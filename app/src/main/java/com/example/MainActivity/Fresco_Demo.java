@@ -1,12 +1,15 @@
 package com.example.MainActivity;
 
 import android.os.Bundle;
+import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.Adapter.CommonAdapter;
 import com.example.Adapter.ViewHolder;
+import com.example.BaseActivity.BaseActivity;
 import com.willprojeck.okhttp.okhttp_text.R;
 import com.xj.frescolib.View.FrescoDrawee;
 import com.xj.utils.View.RefreshLayout.SwipyRefreshLayout;
@@ -29,12 +32,28 @@ public class Fresco_Demo extends BaseActivity implements SwipyRefreshLayout.OnRe
     private Button btn, btn2;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fresco);
-        initView();
-        initData();
-        frescoview.setImageURI(url1);
+    protected int getContentViewId() {
+        return R.layout.activity_fresco;
+    }
+
+    @Override
+    protected int getFragmentContentId() {
+        return 0;
+    }
+
+    @Override
+    public void findView() {
+        listview = (ListView) findViewById(R.id.list_item);
+        frescoview = (FrescoDrawee) findViewById(R.id.frescoView);
+        btn = (Button) findViewById(R.id.btn);
+        btn2 = (Button) findViewById(R.id.btn2);
+        mSwipyRefreshLayout = (SwipyRefreshLayout) findViewById(R.id.pullToRefreshView);
+        mSwipyRefreshLayout.setOnRefreshListener(this);
+        mSwipyRefreshLayout.setRefreshing(true);
+        mSwipyRefreshLayout.setDirection(SwipyRefreshLayoutDirection.BOTH);
+        btn.setOnClickListener(this);
+        btn2.setOnClickListener(this);
+
         mAdapter = new CommonAdapter<String>(Fresco_Demo.this, list, R.layout.item_layou) {
             @Override
             public void convert(ViewHolder helper, String item, int position) {
@@ -44,31 +63,30 @@ public class Fresco_Demo extends BaseActivity implements SwipyRefreshLayout.OnRe
         listview.setAdapter(mAdapter);
     }
 
-    private void initView() {
-        listview = (ListView) findViewById(R.id.list_item);
-        frescoview = (FrescoDrawee) findViewById(R.id.frescoView);
-        btn = (Button) findViewById(R.id.btn);
-        btn2 = (Button) findViewById(R.id.btn2);
-        mSwipyRefreshLayout = (SwipyRefreshLayout) findViewById(R.id.pullToRefreshView);
-        mSwipyRefreshLayout.setOnRefreshListener(this);
-        mSwipyRefreshLayout.setRefreshing(true);
-        mSwipyRefreshLayout.setDirection(SwipyRefreshLayoutDirection.BOTH);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                frescoview.setImageURI(url2);
-            }
-        });
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                frescoview.setDefutImage(getResources().getDrawable(R.mipmap.ic_launcher));
-//                frescoview.getGenericDraweeHierarchy(Fresco_Demo.this).setFailureImage(getResources().getDrawable(R.mipmap.ic_launcher));
-            }
-        });
+    @Override
+    protected void UIDoHandler(Message msg) {
+        super.UIDoHandler(msg);
     }
 
-    private void initData() {
+    @Override
+    public void ViewClick(View v) {
+        switch (v.getId()){
+            case R.id.btn:
+                frescoview.setImageURI(url2);
+                break;
+            case R.id.btn2:
+                frescoview.setDefutImage(ContextCompat.getDrawable(Fresco_Demo.this,R.mipmap.ic_launcher));
+                break;
+        }
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    public void initData() {
         url1 = "http://f.hiphotos.baidu.com/image/h%3D200/sign=236c94ef2c381f3081198aa999004c67/242dd42a2834349bbe78c852cdea15ce37d3beef.jpg";
         url2 = "http://h.hiphotos.baidu.com/image/pic/item/d31b0ef41bd5ad6ee22bc23d85cb39dbb7fd3c12.jpg";
         url3 = "http://c.hiphotos.baidu.com/image/pic/item/267f9e2f070828389df77ac3bc99a9014d08f16b.jpg";
@@ -91,11 +109,12 @@ public class Fresco_Demo extends BaseActivity implements SwipyRefreshLayout.OnRe
         list.add(url9);
         list.add(url0);
         list.add(url10);
+        frescoview.setImageURI(url1);
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(10000);
+                    Thread.sleep(1000);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

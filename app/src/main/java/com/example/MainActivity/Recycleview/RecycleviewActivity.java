@@ -1,11 +1,11 @@
 package com.example.MainActivity.Recycleview;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.MainActivity.BaseActivity;
 import com.willprojeck.okhttp.okhttp_text.R;
 
 /**
@@ -19,7 +19,7 @@ import com.willprojeck.okhttp.okhttp_text.R;
  * 16/4/26          xujian         ${version}
  * Why & What is modified(修改原因):
  */
-public class RecycleviewActivity extends BaseActivity {
+public class RecycleviewActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
