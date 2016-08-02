@@ -49,7 +49,7 @@
         <activity android:name="com.example.MainActivity.MarqueeActivity"/>
         <activity android:name="com.example.MainActivity.GpsActivity"/>
         <activity android:name="com.example.MainActivity.Fresco_Demo"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/AppTheme"/>
         <activity android:name="com.example.MainActivity.OKHttpActivity"/>
         <activity android:name="com.example.MainActivity.SoundSeekbarActivity"/>
         <activity android:name="com.example.MainActivity.Material.MaterialMain"/>
