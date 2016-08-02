@@ -40,6 +40,9 @@ import java.lang.reflect.Field;
 public abstract class BaseFragment extends Fragment implements View.OnClickListener {
     protected BaseActivity mActivity;
 
+    //获取布局文件ID
+    protected abstract int getLayoutId();
+
     // 定义一个初始化Activity控件的抽象方法initWidget()；
     protected abstract void initView(LayoutInflater inflater ,View view, Bundle savedInstanceState);
 
@@ -49,8 +52,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     // 定义点击事件
     protected abstract void ViewClick(View v);
 
-    //获取布局文件ID
-    protected abstract int getLayoutId();
+
 
     public FragmentHandler fragmentHandler = new FragmentHandler(this);
 

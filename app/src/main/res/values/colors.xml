@@ -10,4 +10,13 @@
     <color name="placeholder">#e1e4eb</color>
     <color name="error">#ff9999</color>
     <color name="background_tab_pressed">#6633B5E5</color>
+    <color name="color_ffffff">#ffffffff</color>
+
+
+    <color name="tag_color_green">#8cb340</color>
+    <color name="tag_color_yellow">#f2c14b</color>
+    <color name="tag_color_blue">#40b399</color>
+    <color name="tag_color_red">#f07373</color>
+    <color name="tag_color_purple">#e5abc4</color>
+    <color name="tag_color_orange">#FF6600</color>
 </resources>
