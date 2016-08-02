@@ -32,6 +32,8 @@ import com.squareup.leakcanary.RefWatcher;
  */
 
 public class BaseApplication extends Application{
+    public static boolean isDebug = true;
+    public static boolean isSound = false;                             // true 表示禁音，false 表示有声音
     private RefWatcher refWatcher;
 
     public static RefWatcher getRefWatcher(Context context) {
