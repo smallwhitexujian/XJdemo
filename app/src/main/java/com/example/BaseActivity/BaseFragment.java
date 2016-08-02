@@ -37,8 +37,8 @@ import java.lang.reflect.Field;
  * 邮箱: xj626361950@163.com
  * com.example.MainActivity
  */
-public abstract class BaseFragment extends Fragment implements View.OnClickListener {
-    protected BaseActivity mActivity;
+abstract class BaseFragment extends Fragment implements View.OnClickListener {
+    private BaseActivity mActivity;
 
     //获取布局文件ID
     protected abstract int getLayoutId();
@@ -73,13 +73,13 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         }
     }
 
-    protected void doFragmentHandler(Message msg) {
+    private void doFragmentHandler(Message msg) {
 
     }
 
 
     //获取宿主Activity
-    protected BaseActivity getHoldingActivity() {
+    private BaseActivity getHoldingActivity() {
         return mActivity;
     }
 

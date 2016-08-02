@@ -10,4 +10,18 @@
     <string name="recycler_add">ADD</string>
     <string name="recycler_remove">REMOVE</string>
 
+    <string name="cooking">cooking</string>
+    <string name="dancing">dancing</string>
+    <string name="fashion">fashion</string>
+    <string name="food">food</string>
+    <string name="football">football</string>
+    <string name="game">game</string>
+    <string name="movies">movies</string>
+    <string name="music">music</string>
+    <string name="party">party</string>
+    <string name="technology">technology</string>
+    <string name="reading">reading</string>
+    <string name="singing">singing</string>
+    <string name="sports">sports</string>
+    <string name="TVProgram">TV Program</string>
 </resources>

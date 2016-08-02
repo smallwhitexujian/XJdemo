@@ -33,16 +33,13 @@ public abstract class HintFragment extends BaseFragment{
     /**
      * Fragment当前状态是否可见
      */
-    protected boolean isVisible = false;
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()) {
-            isVisible = true;
             onVisible();
         } else {
-            isVisible = false;
             onInvisible();
         }
     }
@@ -50,14 +47,14 @@ public abstract class HintFragment extends BaseFragment{
     /**
      * 可见
      */
-    protected void onVisible() {
+    private void onVisible() {
         lazyLoad();
     }
 
     /**
      * 不可见
      */
-    protected void onInvisible() {
+    private void onInvisible() {
 
     }
 

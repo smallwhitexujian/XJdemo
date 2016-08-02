@@ -34,6 +34,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         addBtn("RecyclerView 瀑布流", 8);
         addBtn("呼吸灯效果", 9);
         addBtn("RecycleviewActivity", 10);
+        addBtn("标签瀑布流", 11);
     }
 
     private void addBtn(String text, int tag) {
@@ -96,6 +97,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 break;
             case 10:
                 i = new Intent(MainActivity.this, RecycleviewActivity.class);
+                startActivity(i);
+                break;
+            case 11:
+                i = new Intent(MainActivity.this, exampleDemo.class);
                 startActivity(i);
                 break;
         }

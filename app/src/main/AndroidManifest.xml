@@ -56,6 +56,7 @@
         <activity android:name="com.example.MainActivity.Material.RecyclerViewExample"/>
         <activity android:name="com.example.MainActivity.MarterialTransition.TransitionActivity"/>
         <activity android:name="com.example.MainActivity.MarterialTransition.AnimationDemo"/>
+        <activity android:name="com.example.MainActivity.exampleDemo"/>
         <activity android:name="com.example.MainActivity.Recycleview.RecycleviewActivity"/>
             android:windowSoftInputMode="adjustResize|stateHidden"/>
 

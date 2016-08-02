@@ -85,8 +85,11 @@ public abstract class BaseActivity extends SlideBackActivity implements View.OnC
 
 
     //添加fragment
-    protected void addFragment(BaseFragment fragment) {
+    public void addFragment(BaseFragment fragment) {
         if (fragment != null) {
+            if (getFragmentContentId() == 0){
+                return;
+            }
             getSupportFragmentManager().beginTransaction()
                     .replace(getFragmentContentId(), fragment, fragment.getClass().getSimpleName())
                     .addToBackStack(fragment.getClass().getSimpleName())
@@ -95,7 +98,7 @@ public abstract class BaseActivity extends SlideBackActivity implements View.OnC
     }
 
     //移除fragment
-    protected void removeFragment() {
+    public void removeFragment() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             getSupportFragmentManager().popBackStack();
         } else {

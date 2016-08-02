@@ -1,8 +1,8 @@
 package com.example.XApplication;
 
-import android.app.Application;
 import android.content.Intent;
 
+import com.example.BaseActivity.BaseApplication;
 import com.example.Service.BackgroundService;
 import com.xj.frescolib.Config.FrescoHelper;
 
@@ -10,7 +10,7 @@ import com.xj.frescolib.Config.FrescoHelper;
  * Created by xujian on 16/2/20.
  * xApplication
  */
-public class xApplication extends Application {
+public class xApplication extends BaseApplication {
     private static final boolean isDebug = true;
 
     @Override
