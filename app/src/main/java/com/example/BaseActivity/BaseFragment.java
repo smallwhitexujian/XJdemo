@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.leakcanary.RefWatcher;
+
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 
@@ -135,6 +137,8 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     @Override
     public void onDestroy() {
         super.onDestroy();
+        RefWatcher refWatcher = BaseApplication.getRefWatcher(getActivity());
+        refWatcher.watch(this);
     }
 
     @Override//repair bug:java.lang.IllegalStateException: Activity has been destroyed

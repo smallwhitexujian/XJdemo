@@ -63,4 +63,7 @@ dependencies {
     compile project(':frescolib')
     compile 'com.linsea:opendanmaku:1.0.0@aar'
     androidTestCompile 'junit:junit:4.12'
+    testCompile 'org.testng:testng:6.9.6'
+    testCompile 'junit:junit:4.12'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3'
 }
