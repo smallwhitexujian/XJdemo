@@ -27,6 +27,7 @@ import java.util.Map;
  * 作者: Created by: xujian on Date: 16/8/5.
  * 邮箱: xj626361950@163.com
  * com.xujian.socketlib.Protocol
+ *  协议的并解包
  */
 
 public class WillProtocol extends Protocol {

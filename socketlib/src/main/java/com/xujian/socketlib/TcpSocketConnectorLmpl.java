@@ -2,6 +2,10 @@ package com.xujian.socketlib;
 
 import android.util.Log;
 
+import com.xujian.socketlib.CallBack.TcpSocketCallback;
+import com.xujian.socketlib.CallBack.TcpSocketConnectorCallback;
+import com.xujian.socketlib.Interface.TCPSocket;
+import com.xujian.socketlib.Interface.TcpSocketConnector;
 import com.xujian.socketlib.Protocol.Protocol;
 
 import java.util.Timer;

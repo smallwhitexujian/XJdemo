@@ -1,4 +1,8 @@
-package com.xujian.socketlib;
+package com.xujian.socketlib.Interface;
+
+import com.xujian.socketlib.SocketConfing;
+import com.xujian.socketlib.CallBack.TcpSocketCallback;
+import com.xujian.socketlib.CallBack.TcpSocketConnectorCallback;
 
 /**
  * 　　┏┓　　　　┏┓

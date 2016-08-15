@@ -1,5 +1,9 @@
 package com.xujian.socketlib;
 
+import com.xujian.socketlib.CallBack.TcpSocketCallback;
+import com.xujian.socketlib.CallBack.TcpSocketConnectorCallback;
+import com.xujian.socketlib.Interface.SocketManager;
+import com.xujian.socketlib.Interface.TcpSocketConnector;
 import com.xujian.socketlib.Protocol.Protocol;
 import com.xujian.socketlib.Protocol.WillProtocol;
 
@@ -45,7 +49,7 @@ public class SocketManagerlmpl implements SocketManager {
         mSocketConfing.setTimeout(timeout);
     }
 
-    public void startSocket(String host, int port,TcpSocketConnectorCallback connectorCallback, TcpSocketCallback socketCallback) {
+    public void startSocket(String host, int port, TcpSocketConnectorCallback connectorCallback, TcpSocketCallback socketCallback) {
         mProtocol = new WillProtocol();
         mSocketConfing = new SocketConfing();
         mSocketConfing.setHost(host);

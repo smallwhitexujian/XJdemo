@@ -10,10 +10,10 @@ import android.widget.TextView;
 import com.xujian.socketlib.Protocol.Protocol;
 import com.xujian.socketlib.Protocol.WillProtocol;
 import com.xujian.socketlib.R;
-import com.xujian.socketlib.SocketManager;
+import com.xujian.socketlib.Interface.SocketManager;
 import com.xujian.socketlib.SocketManagerlmpl;
-import com.xujian.socketlib.TcpSocketCallback;
-import com.xujian.socketlib.TcpSocketConnectorCallback;
+import com.xujian.socketlib.CallBack.TcpSocketCallback;
+import com.xujian.socketlib.CallBack.TcpSocketConnectorCallback;
 import com.xujian.socketlib.Utils.DebugLogs;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -48,15 +48,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.Start:
+            case R.id.Start://发送数据包
                 String jsonString = "{\"barid\":2007,\"password\":\"\",\"token\":\"3EF2AEC00FF73B05F28372CBFAE3B95E\",\"userid\":51481}";
                 byte[] bytes = WillProtocol.sendMessage(10001, jsonString);
                 socketManager.sendMessage(bytes);
                 break;
-            case R.id.stop:
+            case R.id.stop://停止socket连接
                 socketManager.stopSocket();
                 break;
-            case R.id.Reconnection:
+            case R.id.Reconnection://重新连接
                 socketManager.Reconnection();
                 break;
         }
@@ -79,8 +79,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String jsonString = "{\"barid\":2007,\"password\":\"\",\"token\":\"3EF2AEC00FF73B05F28372CBFAE3B95E\",\"userid\":51481}";
             byte[] bytes = WillProtocol.sendMessage(10001, jsonString);
             socketManager.sendMessage(bytes);
-//            mHandler.obtainMessage(GlobalDef.SERVICE_STATUS_SUCCESS).sendToTarget();
-//            proxy.doRoomHeartbeat();//发送心跳
         }
     };
 

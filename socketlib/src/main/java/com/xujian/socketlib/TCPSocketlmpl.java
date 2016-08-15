@@ -1,6 +1,8 @@
 package com.xujian.socketlib;
 
 import com.xj.utils.utils.DebugLogs;
+import com.xujian.socketlib.CallBack.TcpSocketCallback;
+import com.xujian.socketlib.Interface.TCPSocket;
 import com.xujian.socketlib.Protocol.Protocol;
 import com.xujian.socketlib.Utils.ByteArrayBuffer;
 
