@@ -1,6 +1,9 @@
-package com.xujian.socketlib.Protocol;
+package com.xujian.socketlib;
+
+import com.xujian.socketlib.Interface.TCPSocket;
 
 /**
+ *
  * 　　┏┓　　　　┏┓
  * 　┏┛┻━━━━┛┻┓
  * 　┃　　　　　　　　┃
@@ -17,39 +20,16 @@ package com.xujian.socketlib.Protocol;
  * 　　　　┃　　　　　　　┏┛
  * 　　　　┗┓┓┏━┳┓┏┛
  * 　　　　　┃┫┫　┃┫┫
- * <p>
- * <p>
- * 作者: Created by: xujian on Date: 16/8/5.
+ *
+ *
+ * 作者: Created by: xujian on Date: 16/8/16.
  * 邮箱: xj626361950@163.com
- * com.xujian.socketlib.Protocol
- * 协议拼接,
- * 模型 包头,状态码 包体
+ * com.xujian.socketlib
  */
+public interface Headerbeat {
+    void setConfig(int firstTime ,int period);
 
-public abstract class Protocol {
-    // 数据长度
-    public int getDataLen(byte[] pack) {
-        return 0;
-    }
+    void doneHeartbeat();
 
-    // 返回协议头的长度
-    public int getHeadlen() {
-        return 0;
-    }
-
-    // 数据
-    public byte[] getData(byte[] pack) {
-        return null;
-    }
-
-    // 状态吗
-    public int getType(byte[] parcel) {
-        return 0;
-    }
-
-    // 心跳包
-    public byte[] heartbeatParcel() {
-        return null;
-    }
+    void doHeartbeat(final TCPSocket tcpSocket, final byte[] heartbeatParcel);
 }
-

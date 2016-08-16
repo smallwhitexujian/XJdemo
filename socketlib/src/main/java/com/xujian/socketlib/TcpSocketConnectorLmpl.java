@@ -52,6 +52,7 @@ public class TcpSocketConnectorLmpl implements TcpSocketConnector {
     private Protocol mProtocol;
     private TcpSocketCallback tcpsocketCallback;
     private TcpSocketConnectorCallback connectorCallback;
+    private Headerbeat headerbeat;
 
     public void init(SocketConfing socketConfing, Protocol protocol, TcpSocketCallback tcpSocketCallback, TcpSocketConnectorCallback tcpSocketConnectorCallback) {
         if (socketConfing == null) {
@@ -67,6 +68,7 @@ public class TcpSocketConnectorLmpl implements TcpSocketConnector {
         this.mProtocol = protocol;
         this.tcpsocketCallback = tcpSocketCallback;
         this.connectorCallback = tcpSocketConnectorCallback;
+        headerbeat = new BastHeartbeat();
     }
     //连接服务器
     public void connect() {
@@ -85,6 +87,7 @@ public class TcpSocketConnectorLmpl implements TcpSocketConnector {
                         Log.d(TAG,"服务器已连接..开始接受数据..");
                         stopTimer();
                         mSocket.read();//读取数据流
+                        mSocket.doHeartbeat(headerbeat);
                         connectorCallback.connectSuc();//通知连接成功
                     } else {
                         connectorCallback.connectFaild();

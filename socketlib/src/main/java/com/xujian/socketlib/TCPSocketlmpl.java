@@ -51,7 +51,8 @@ public class TCPSocketlmpl implements TCPSocket {
     private int MAX_BORDER = 10 * 1024 * 1024;  //最大空间
     private TcpSocketCallback mTcpSocketCallback; //业务回调
     private ExecutorService mPool = Executors.newFixedThreadPool(2);
-    private boolean isReconnection = true;
+    private boolean isReconnection = true;      // 重连
+    private Headerbeat mBastHeartbeat;         //心跳
 
     TCPSocketlmpl(SocketConfing confing, Protocol protocol, TcpSocketCallback tcpSocketCallback) {
         mRunStatus = CONNECTINIT;
@@ -136,9 +137,39 @@ public class TCPSocketlmpl implements TCPSocket {
         return false;
     }
 
+    /**
+     * 启动心跳包
+     * 默认启动时间2秒,间隔时间20秒
+     */
+    public void doHeartbeat(Headerbeat bastHeartbeat) {
+        mBastHeartbeat = bastHeartbeat;
+        byte[] heartbeatParcel = mProtocol.heartbeatParcel();
+        mBastHeartbeat.doHeartbeat(this,heartbeatParcel);
+    }
+
+    /**
+     * 判断时间启动心跳
+     * @param firstTime  延迟多长时间启动
+     * @param period     间隔时间
+     */
+    public void doHeartbeat(Headerbeat bastHeartbeat,int firstTime ,int period ) {
+        mBastHeartbeat = bastHeartbeat;
+        byte[] heartbeatParcel = mProtocol.heartbeatParcel();
+        mBastHeartbeat.setConfig(firstTime,period);
+        mBastHeartbeat.doHeartbeat(this,heartbeatParcel);
+    }
+
+    //停止心跳
+    public void doneHeartbeat() {
+        if (mBastHeartbeat != null) {
+            mBastHeartbeat.doneHeartbeat();
+        }
+    }
+
     public void writeHeartbeat(byte[] heartParcel) {
         if (mOutputStream != null) {
             try {
+                DebugLogs.v("-----心跳包---->");
                 mOutputStream.write(heartParcel, 0, heartParcel.length);
             } catch (IOException e) {
                 onLostConnect();
@@ -192,9 +223,11 @@ public class TCPSocketlmpl implements TCPSocket {
                         while (readCount < mByteBuffer.mlen) {
                             int readNum = mInputStream.read(mByteBuffer.mbuffer, readCount, count - readCount);
                             if (readNum < 0) {
+                                DebugLogs.d("EOF");
                                 DebugLogs.d("socket ---lost connection ");
                                 isRun = false;
                                 isLostConnect = true;
+                                setReconnection(false);
                                 break;
                             }
                             if (readNum > 0) {
@@ -208,6 +241,7 @@ public class TCPSocketlmpl implements TCPSocket {
                             isRun = false;
                             mByteBuffer = null;
                             isLostConnect = true;
+                            setReconnection(false);
                         } else {
                             if (mByteBuffer.mlen == totalLen) {
                                 if (mTcpSocketCallback != null) {
@@ -219,6 +253,7 @@ public class TCPSocketlmpl implements TCPSocket {
                                     mByteBuffer.flushSize(totalLen, mByteBuffer);
                                 } else {//oom异常处理
                                     isRun = false;
+                                    setReconnection(false);
                                     mByteBuffer = null;
                                     isLostConnect = true;
                                 }

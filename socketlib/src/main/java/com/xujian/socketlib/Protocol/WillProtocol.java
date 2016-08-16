@@ -33,10 +33,10 @@ import java.util.Map;
 public class WillProtocol extends Protocol {
     private static final int PACK_LEN = 4;          //四字节长度
     private static final int PACK_TYPE_LEN = 4;     //四字节操作码
-    public static final String TAG = "WillProtocol";
-    public static final String KEY_PROTOCOL_LEN = TAG + "_len";
-    public static final String KEY_PROTOCOL_TYPE = TAG + "_type";
-    public static final String KEY_PROTOCOL_DATA = TAG + "_data";
+    private static final String TAG = "WillProtocol";
+    private static final String KEY_PROTOCOL_LEN = TAG + "_len";
+    private static final String KEY_PROTOCOL_TYPE = TAG + "_type";
+    private static final String KEY_PROTOCOL_DATA = TAG + "_data";
 
     public Map<String, byte[]> parsePack(byte[] pack) {
         //不是一个正常的包
@@ -115,5 +115,15 @@ public class WillProtocol extends Protocol {
             System.arraycopy(jsonStr.getBytes(), 0, parcelAry, PACK_LEN+PACK_TYPE_LEN, jsonStr.getBytes().length);
         }
         return parcelAry;
+    }
+
+    /**
+     * 心跳 心跳包默认100操作码
+     * @return
+     */
+    @Override
+    public byte[] heartbeatParcel() {
+        int typeValue = 100;
+        return parcel(PACK_LEN + PACK_TYPE_LEN, typeValue, null);
     }
 }

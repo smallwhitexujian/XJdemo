@@ -1,5 +1,7 @@
 package com.xujian.socketlib.Interface;
 
+import com.xujian.socketlib.Headerbeat;
+
 /**
  * 　　┏┓　　　　┏┓
  * 　┏┛┻━━━━┛┻┓
@@ -41,9 +43,18 @@ public interface TCPSocket {
 
     void read();            // 读取服务器数据
 
+    void writeHeartbeat(byte[] heartParcel);//发送心跳
+
     int getRunStatus();     // 获取状态连接
+
+    void doHeartbeat(Headerbeat bastHeartbeat); //启动心跳
+
+    void doHeartbeat(Headerbeat bastHeartbeat, int firstTime, int period);
+
+    void doneHeartbeat();   //停止心跳
 
     boolean isReconnection();
 
     void setReconnection(boolean reconnection);
+
 }
