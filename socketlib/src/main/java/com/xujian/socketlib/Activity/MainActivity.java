@@ -97,13 +97,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    str.setText(String.format("数据结果:%s", data));
+                    str.setText(String.format("服务器连接成功:%s", data));
                 }
             });
         }
 
         @Override
         public void onLostConnect() {
+            DebugLogs.d("-----socket is onLostConnect---->");
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

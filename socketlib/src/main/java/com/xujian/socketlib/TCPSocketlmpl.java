@@ -121,8 +121,8 @@ public class TCPSocketlmpl implements TCPSocket {
             }
         } catch (IOException e) {
             isLostConnect = true;
+            onLostConnect();
             e.printStackTrace();
-            throw new RuntimeException("写入数据失败");
         }
         return false;
     }
@@ -182,7 +182,7 @@ public class TCPSocketlmpl implements TCPSocket {
                         while (readCount < mByteBuffer.mlen) {
                             int readNum = mInputStream.read(mByteBuffer.mbuffer, readCount, count - readCount);
                             if (readNum < 0) {
-                                DebugLogs.e("jjfly ---lost connection ");
+                                DebugLogs.d("socket ---lost connection ");
                                 isRun = false;
                                 isLostConnect = true;
                                 break;
@@ -201,7 +201,7 @@ public class TCPSocketlmpl implements TCPSocket {
                         } else {
                             if (mByteBuffer.mlen == totalLen) {
                                 if (mTcpSocketCallback != null) {
-                                    mTcpSocketCallback.onReceiveParcel(mProtocol,mByteBuffer.mbuffer);
+                                    mTcpSocketCallback.onReceiveParcel(mProtocol, mByteBuffer.mbuffer);
                                 }
                                 mByteBuffer = null;
                             } else {
@@ -226,10 +226,12 @@ public class TCPSocketlmpl implements TCPSocket {
                 }
                 disconnect();
                 //丢失连接业务流程回调
-                if (mTcpSocketCallback != null) {
-                    if (isLostConnect) {
+                if (isLostConnect) {
+                    if (mTcpSocketCallback != null) {
                         mTcpSocketCallback.onLostConnect();
-                    } else {
+                    }
+                } else {
+                    if (mTcpSocketCallback != null) {
                         mTcpSocketCallback.onReadTaskFinish();
                     }
                 }

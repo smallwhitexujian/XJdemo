@@ -30,7 +30,7 @@ public interface TcpSocketCallback {
     // 业务接口
     void onReceiveParcel(Protocol mProtocol, byte[] pack);   // 收到包时候回调
 
-    void onLostConnect();                   // 丢失链接时候回调
+    void onLostConnect();              // 丢失链接时候回调 是否需要重新连接
 
     void onReadTaskFinish();                // 读线程正常在没有丢失连接退出后的回调
 }
