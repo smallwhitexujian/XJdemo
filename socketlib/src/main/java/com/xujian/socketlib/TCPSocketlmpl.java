@@ -50,13 +50,22 @@ public class TCPSocketlmpl implements TCPSocket {
     private boolean isLostConnect = false;      // 是否丢失状态,
     private int MAX_BORDER = 10 * 1024 * 1024;  //最大空间
     private TcpSocketCallback mTcpSocketCallback; //业务回调
-    protected ExecutorService mPool = Executors.newFixedThreadPool(2);
+    private ExecutorService mPool = Executors.newFixedThreadPool(2);
+    private boolean isReconnection = true;
 
-    public TCPSocketlmpl(SocketConfing confing, Protocol protocol, TcpSocketCallback tcpSocketCallback) {
+    TCPSocketlmpl(SocketConfing confing, Protocol protocol, TcpSocketCallback tcpSocketCallback) {
         mRunStatus = CONNECTINIT;
         this.socketConfing = confing;
         this.mProtocol = protocol;
         this.mTcpSocketCallback = tcpSocketCallback;
+    }
+
+    public boolean isReconnection() {
+        return isReconnection;
+    }
+
+    public void setReconnection(boolean reconnection) {
+        isReconnection = reconnection;
     }
 
     //创建socket连接 创建输入流和写入流
@@ -142,7 +151,7 @@ public class TCPSocketlmpl implements TCPSocket {
     private void onLostConnect() {
         disconnect();
         if (mTcpSocketCallback != null) {
-            mTcpSocketCallback.onLostConnect();
+            mTcpSocketCallback.onLostConnect(isReconnection());
         }
     }
 
@@ -172,6 +181,7 @@ public class TCPSocketlmpl implements TCPSocket {
                 ByteArrayBuffer mByteBuffer = null;
                 isRun = true;
                 isLostConnect = false;
+                setReconnection(true);
                 while (isRun) {
                     try {
                         if (mByteBuffer == null) {
@@ -228,7 +238,7 @@ public class TCPSocketlmpl implements TCPSocket {
                 //丢失连接业务流程回调
                 if (isLostConnect) {
                     if (mTcpSocketCallback != null) {
-                        mTcpSocketCallback.onLostConnect();
+                        mTcpSocketCallback.onLostConnect(isReconnection());
                     }
                 } else {
                     if (mTcpSocketCallback != null) {

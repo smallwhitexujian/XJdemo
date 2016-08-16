@@ -104,6 +104,7 @@ public class TcpSocketConnectorLmpl implements TcpSocketConnector {
             if (mSocket.getRunStatus() == TCPSocket.CONNECTED) {//如果是连接状态就发送消息
                 return mSocket.send(data, 0, data.length);
             }else{
+                mSocket.setReconnection(false);
                 mSocket.disconnect();
                 connect();
             }
@@ -116,6 +117,7 @@ public class TcpSocketConnectorLmpl implements TcpSocketConnector {
     @Override
     public void disconnect() {
         if (mSocket != null){
+            mSocket.setReconnection(false);
             mSocket.disconnect();
         }
     }

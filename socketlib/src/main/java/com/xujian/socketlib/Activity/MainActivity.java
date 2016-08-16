@@ -103,8 +103,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         @Override
-        public void onLostConnect() {
-            DebugLogs.d("-----socket is onLostConnect---->");
+        public void onLostConnect(boolean isReconnection) {
+            DebugLogs.d("-----socket is onLostConnect---->"+isReconnection);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

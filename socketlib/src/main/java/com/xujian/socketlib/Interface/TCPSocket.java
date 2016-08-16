@@ -42,4 +42,8 @@ public interface TCPSocket {
     void read();            // 读取服务器数据
 
     int getRunStatus();     // 获取状态连接
+
+    boolean isReconnection();
+
+    void setReconnection(boolean reconnection);
 }
