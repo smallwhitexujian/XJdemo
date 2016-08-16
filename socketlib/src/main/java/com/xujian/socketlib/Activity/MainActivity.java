@@ -111,6 +111,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     str.setText(String.format("服务器状态:onLostConnect"));
                 }
             });
+            if (isReconnection){
+                socketManager.Reconnection();
+            }
         }
 
         @Override
