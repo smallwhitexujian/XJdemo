@@ -21,6 +21,7 @@ import java.util.ArrayList;
 /**
  * Created by xujian on 16/3/23.
  * fresco图片处理
+ *      fresco 处理图片的时候需要设置高度,
  */
 public class Fresco_Demo extends BaseActivity implements SwipyRefreshLayout.OnRefreshListener {
     private CommonAdapter<String> mAdapter = null;
