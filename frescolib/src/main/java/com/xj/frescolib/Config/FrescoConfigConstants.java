@@ -13,10 +13,12 @@
 package com.xj.frescolib.Config;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Environment;
 
 import com.facebook.cache.disk.DiskCacheConfig;
 import com.facebook.common.internal.Supplier;
+import com.facebook.common.memory.NoOpMemoryTrimmableRegistry;
 import com.facebook.common.util.ByteConstants;
 import com.facebook.imagepipeline.cache.MemoryCacheParams;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
@@ -113,6 +115,8 @@ public class FrescoConfigConstants {
 
         //缓存图片配置
         ImagePipelineConfig.Builder configBuilder = ImagePipelineConfig.newBuilder(context)
+                .setBitmapsConfig(Bitmap.Config.RGB_565)
+                .setMemoryTrimmableRegistry(NoOpMemoryTrimmableRegistry.getInstance())
 //                .setAnimatedImageFactory(AnimatedImageFactory animatedImageFactory)//图片加载动画
                 .setBitmapMemoryCacheParamsSupplier(mSupplierMemoryCacheParams)//内存缓存配置（一级缓存，已解码的图片）
 //                .setCacheKeyFactory(cacheKeyFactory)//缓存Key工厂
@@ -132,8 +136,6 @@ public class FrescoConfigConstants {
                 .setSmallImageDiskCacheConfig(diskSmallCacheConfig);//磁盘缓存配置（小图片，可选～三级缓存的小图优化缓存）
         return configBuilder.build();
     }
-
-
 
 //    //Drawees   DraweeHierarchy  组织
 //    public static GenericDraweeHierarchy getGenericDraweeHierarchy(Context context) {

@@ -35,6 +35,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         addBtn("呼吸灯效果", 9);
         addBtn("RecycleviewActivity", 10);
         addBtn("标签瀑布流", 11);
+        addBtn("计时器", 12);
     }
 
     private void addBtn(String text, int tag) {
@@ -101,6 +102,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 break;
             case 11:
                 i = new Intent(MainActivity.this, exampleDemo.class);
+                startActivity(i);
+                break;
+            case 12:
+                i = new Intent(MainActivity.this, ChronometerActivity.class);
                 startActivity(i);
                 break;
         }

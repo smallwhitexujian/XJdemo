@@ -11,9 +11,11 @@ import com.example.Adapter.CommonAdapter;
 import com.example.Adapter.ViewHolder;
 import com.example.BaseActivity.BaseActivity;
 import com.willprojeck.okhttp.okhttp_text.R;
+import com.xj.frescolib.Config.FrescoHelper;
 import com.xj.frescolib.View.FrescoDrawee;
 import com.xj.utils.View.RefreshLayout.SwipyRefreshLayout;
 import com.xj.utils.View.RefreshLayout.SwipyRefreshLayoutDirection;
+import com.xj.utils.utils.DebugLogs;
 
 import java.util.ArrayList;
 
@@ -62,6 +64,8 @@ public class Fresco_Demo extends BaseActivity implements SwipyRefreshLayout.OnRe
             }
         };
         listview.setAdapter(mAdapter);
+        DebugLogs.d("---->"+ FrescoHelper.showCacheSize());
+
     }
 
     @Override
@@ -99,6 +103,7 @@ public class Fresco_Demo extends BaseActivity implements SwipyRefreshLayout.OnRe
         url9 = "http://f.hiphotos.baidu.com/image/pic/item/4e4a20a4462309f735600bfe760e0cf3d6cad6cb.jpg";
         String url0 = "http://d.hiphotos.baidu.com/image/pic/item/cb8065380cd7912344a13298a9345982b3b7809d.jpg";
         String url10 = "http://a.hiphotos.baidu.com/image/pic/item/8601a18b87d6277f1ee195d42c381f30e824fc6f.jpg";
+        DebugLogs.d("----->"+FrescoHelper.getFile(url9));
         list.add(url1);
         list.add(url2);
         list.add(url3);

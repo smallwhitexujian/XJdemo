@@ -57,7 +57,8 @@
         <activity android:name="com.example.MainActivity.MarterialTransition.TransitionActivity"/>
         <activity android:name="com.example.MainActivity.MarterialTransition.AnimationDemo"/>
         <activity android:name="com.example.MainActivity.exampleDemo"/>
-        <activity android:name="com.example.MainActivity.Recycleview.RecycleviewActivity"/>
+        <activity android:name="com.example.MainActivity.ChronometerActivity"/>
+        <activity android:name="com.example.MainActivity.Recycleview.RecycleviewActivity"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
 
 

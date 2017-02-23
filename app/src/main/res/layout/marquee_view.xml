@@ -8,6 +8,7 @@
         android:id="@+id/horizontalScrollView"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:background="#765431"
         android:scrollbars="none">
 
         <LinearLayout
@@ -30,8 +31,8 @@
                 android:id="@+id/imgView"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:visibility="gone"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/ic_launcher"
+                android:visibility="gone" />
         </LinearLayout>
     </HorizontalScrollView>
 </LinearLayout>
